@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Horn Islamic Insurance | YellowPages.so</title>
+  <meta name="description" content="View Horn Islamic Insurance services, reviews, contact details, branches and request a quotation." />
+  <style>
+    :root{
+      --yellow:#FFD500;
+      --yellow-dark:#E7BC00;
+      --navy:#0B1F3A;
+      --navy-2:#14395C;
+      --text:#182230;
+      --muted:#667085;
+      --line:#E7EAF0;
+      --soft:#F7F9FC;
+      --white:#FFFFFF;
+      --green:#168A4A;
+      --red:#C73535;
+      --shadow:0 12px 32px rgba(11,31,58,.10);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:var(--soft);
+      line-height:1.5;
+    }
+    a{text-decoration:none;color:inherit}
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
+    .container{width:min(1180px,calc(100% - 32px));margin:auto}
+    header{
+      background:#fff;
+      border-bottom:1px solid var(--line);
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+      padding:16px 0;
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:24px;color:var(--navy)}
+    .brand-mark{
+      width:42px;height:42px;border-radius:12px;background:var(--yellow);
+      display:grid;place-items:center;color:var(--navy);font-weight:900;
+    }
+    .nav-links{display:flex;gap:22px;font-weight:700;color:#344054;font-size:14px}
+    .nav-actions{display:flex;gap:10px}
+    .btn{
+      border:0;border-radius:10px;padding:11px 16px;font-weight:800;
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    }
+    .btn-primary{background:var(--yellow);color:var(--navy)}
+    .btn-dark{background:var(--navy);color:#fff}
+    .btn-outline{background:#fff;border:1px solid var(--line);color:var(--navy)}
+    .btn-light{background:var(--soft);color:var(--navy)}
+    .breadcrumbs{padding:18px 0;color:var(--muted);font-size:13px}
+    .profile-hero{
+      background:#fff;
+      border-bottom:1px solid var(--line);
+    }
+    .cover{
+      height:250px;
+      border-radius:20px 20px 0 0;
+      background:
+        linear-gradient(120deg,rgba(11,31,58,.96),rgba(20,57,92,.78)),
+        radial-gradient(circle at 80% 20%,rgba(255,213,0,.5),transparent 25%);
+      position:relative;
+      overflow:hidden;
+    }
+    .cover:after{
+      content:"";
+      position:absolute;
+      width:260px;height:260px;border-radius:50%;
+      right:-60px;top:-70px;
+      border:34px solid rgba(255,255,255,.08);
+    }
+    .cover-label{
+      position:absolute;right:20px;top:20px;
+      background:rgba(255,255,255,.14);color:#fff;
+      border:1px solid rgba(255,255,255,.2);
+      border-radius:999px;padding:8px 12px;font-size:12px;font-weight:800;
+    }
+    .profile-summary{
+      display:grid;
+      grid-template-columns:130px minmax(0,1fr) auto;
+      gap:20px;
+      align-items:end;
+      padding:0 24px 24px;
+    }
+    .logo-box{
+      width:130px;height:130px;
+      border-radius:22px;
+      background:#fff;
+      border:6px solid #fff;
+      box-shadow:var(--shadow);
+      display:grid;place-items:center;
+      font-size:28px;font-weight:900;color:var(--navy);
+      margin-top:-66px;
+      position:relative;
+      z-index:2;
+    }
+    .title-area{padding-top:16px}
+    .title-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .title-row h1{
+      margin:0;
+      color:var(--navy);
+      font-size:34px;
+      letter-spacing:-.7px;
+    }
+    .badge{
+      font-size:11px;border-radius:999px;padding:6px 9px;font-weight:800;
+    }
+    .verified{background:#E9F7EF;color:var(--green)}
+    .premium{background:#FFF4BE;color:#7A5D00}
+    .profile-meta{
+      display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:14px;margin:8px 0;
+    }
+    .rating{font-size:15px}
+    .open{color:var(--green);font-weight:800}
+    .hero-actions{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:9px;
+      min-width:290px;
+    }
+    .hero-actions .btn-primary{grid-column:1/-1}
+    .tabs-wrap{
+      background:#fff;
+      position:sticky;
+      top:75px;
+      z-index:40;
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+    }
+    .tabs{
+      display:flex;
+      gap:6px;
+      overflow:auto;
+      padding:10px 0;
+    }
+    .tabs a{
+      white-space:nowrap;
+      padding:9px 13px;
+      border-radius:9px;
+      color:#475467;
+      font-size:14px;
+      font-weight:750;
+    }
+    .tabs a:hover,.tabs a.active{background:var(--navy);color:#fff}
+    .page-layout{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 330px;
+      gap:24px;
+      padding:28px 0 64px;
+    }
+    .content-stack{display:grid;gap:20px}
+    .panel{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:17px;
+      padding:24px;
+    }
+    .panel h2{
+      margin:0 0 16px;
+      color:var(--navy);
+      font-size:24px;
+      letter-spacing:-.4px;
+    }
+    .panel h3{color:var(--navy)}
+    .panel p{color:#536273}
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+    .info-card{
+      background:var(--soft);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:14px;
+    }
+    .info-card strong{display:block;color:var(--navy);font-size:13px;margin-bottom:3px}
+    .info-card span{font-size:13px;color:var(--muted)}
+    .service-list{display:grid;gap:12px}
+    .service-item{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:17px;
+      display:grid;
+      grid-template-columns:54px minmax(0,1fr) auto;
+      gap:14px;
+      align-items:center;
+    }
+    .service-icon{
+      width:54px;height:54px;border-radius:13px;
+      background:#FFF8D6;display:grid;place-items:center;font-size:23px;
+    }
+    .service-item h3{margin:0 0 4px;font-size:17px}
+    .service-item p{margin:0;font-size:14px}
+    .service-item .btn{font-size:13px}
+    .gallery{
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr;
+      grid-template-rows:140px 140px;
+      gap:10px;
+    }
+    .photo{
+      border-radius:14px;
+      background:linear-gradient(135deg,#DCE8F5,#B7CBE0);
+      display:flex;align-items:end;padding:12px;color:#fff;font-weight:800;
+      overflow:hidden;
+    }
+    .photo:first-child{grid-row:1/3}
+    .photo:nth-child(2){background:linear-gradient(135deg,#D7E8D8,#96C39D)}
+    .photo:nth-child(3){background:linear-gradient(135deg,#F7E3B7,#D6B85B)}
+    .photo:nth-child(4){background:linear-gradient(135deg,#D9D3EB,#998CC2)}
+    .photo:nth-child(5){background:linear-gradient(135deg,#E5D5D5,#BC8E8E)}
+    .branch-list{display:grid;gap:12px}
+    .branch{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:16px;
+      display:flex;justify-content:space-between;gap:18px;align-items:center;
+    }
+    .branch h3{margin:0 0 5px;font-size:17px}
+    .branch p{margin:2px 0;font-size:14px}
+    .map{
+      height:270px;border-radius:15px;
+      background:
+        linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.12)),
+        repeating-linear-gradient(0deg,#DCE7D8 0 28px,#D7E1EB 28px 31px),
+        repeating-linear-gradient(90deg,transparent 0 44px,rgba(255,255,255,.75) 44px 48px);
+      position:relative;overflow:hidden;
+      border:1px solid var(--line);
+    }
+    .map-pin{
+      position:absolute;left:52%;top:42%;
+      width:44px;height:44px;border-radius:50% 50% 50% 0;
+      background:var(--yellow);border:3px solid var(--navy);
+      transform:rotate(-45deg);display:grid;place-items:center;font-weight:900;
+    }
+    .map-pin span{transform:rotate(45deg)}
+    .hours-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .hours-row{
+      display:flex;justify-content:space-between;
+      border-bottom:1px dashed var(--line);
+      padding:9px 0;font-size:14px;
+    }
+    .review-summary{
+      display:grid;grid-template-columns:180px 1fr;gap:28px;align-items:center;
+      margin-bottom:22px;
+    }
+    .rating-big{text-align:center}
+    .rating-big strong{font-size:52px;display:block;color:var(--navy);line-height:1}
+    .rating-big span{color:var(--muted);font-size:13px}
+    .rating-bars{display:grid;gap:8px}
+    .bar-row{display:grid;grid-template-columns:55px 1fr 34px;gap:9px;align-items:center;font-size:13px}
+    .bar{height:8px;border-radius:99px;background:#EDF0F4;overflow:hidden}
+    .bar span{display:block;height:100%;background:var(--yellow)}
+    .review-list{display:grid;gap:14px}
+    .review{
+      border-top:1px solid var(--line);
+      padding-top:16px;
+    }
+    .review-head{display:flex;justify-content:space-between;gap:12px}
+    .review h3{margin:0;font-size:16px}
+    .review p{margin:8px 0}
+    .review-meta{font-size:12px;color:var(--muted)}
+    .business-response{
+      margin-top:10px;background:var(--soft);border-left:4px solid var(--yellow);
+      padding:12px 14px;border-radius:8px;font-size:14px;
+    }
+    .sidebar{display:grid;gap:18px;align-self:start}
+    .contact-card{
+      background:#fff;border:1px solid var(--line);border-radius:17px;padding:20px;
+      position:sticky;top:135px;
+    }
+    .contact-card h3{margin:0 0 14px;color:var(--navy)}
+    .contact-row{
+      display:flex;gap:11px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line);
+    }
+    .contact-row:first-of-type{border-top:0}
+    .contact-row strong{display:block;color:var(--navy);font-size:13px}
+    .contact-row span,.contact-row a{font-size:13px;color:var(--muted)}
+    .contact-card .btn{width:100%;margin-top:9px}
+    .trust-card{
+      background:#fff;border:1px solid var(--line);border-radius:17px;padding:20px;
+    }
+    .trust-card h3{margin:0 0 14px;color:var(--navy)}
+    .trust-row{
+      display:flex;align-items:center;gap:10px;padding:9px 0;color:#475467;font-size:14px;
+    }
+    .trust-icon{
+      width:34px;height:34px;border-radius:10px;background:#E9F7EF;color:var(--green);
+      display:grid;place-items:center;font-weight:900;
+    }
+    .claim-card{
+      background:var(--yellow);border-radius:17px;padding:20px;color:var(--navy);
+    }
+    .claim-card h3{margin:0 0 6px}
+    .claim-card p{font-size:14px;margin:0 0 14px}
+    .sticky-mobile-actions{display:none}
+    footer{background:#07182F;color:#fff;padding:40px 0}
+    .footer-inner{display:flex;justify-content:space-between;gap:20px;color:#B9C7D7;font-size:14px}
+    @media(max-width:980px){
+      .nav-links{display:none}
+      .profile-summary{grid-template-columns:110px 1fr}
+      .logo-box{width:110px;height:110px}
+      .hero-actions{grid-column:1/-1;grid-template-columns:repeat(4,1fr)}
+      .hero-actions .btn-primary{grid-column:auto}
+      .page-layout{grid-template-columns:1fr}
+      .contact-card{position:static}
+      .sidebar{grid-template-columns:1fr 1fr}
+      .claim-card{grid-column:1/-1}
+    }
+    @media(max-width:720px){
+      .cover{height:190px}
+      .profile-summary{grid-template-columns:82px 1fr;padding:0 16px 18px}
+      .logo-box{width:82px;height:82px;font-size:20px;border-radius:16px;margin-top:-42px}
+      .title-row h1{font-size:26px}
+      .hero-actions{grid-template-columns:1fr 1fr}
+      .info-grid{grid-template-columns:1fr 1fr}
+      .service-item{grid-template-columns:50px 1fr}
+      .service-item .btn{grid-column:1/-1}
+      .gallery{grid-template-columns:1fr 1fr;grid-template-rows:170px 110px 110px}
+      .photo:first-child{grid-column:1/-1;grid-row:auto}
+      .review-summary{grid-template-columns:1fr}
+      .hours-grid{grid-template-columns:1fr}
+      .sidebar{grid-template-columns:1fr}
+      .nav-actions .btn-outline{display:none}
+      .sticky-mobile-actions{
+        display:grid;grid-template-columns:repeat(4,1fr);
+        position:fixed;bottom:0;left:0;right:0;z-index:60;
+        background:#fff;border-top:1px solid var(--line);padding:8px;
+        box-shadow:0 -8px 22px rgba(11,31,58,.1);
+      }
+      .sticky-mobile-actions button{
+        border:0;background:#fff;color:var(--navy);font-size:11px;font-weight:800;
+        display:grid;gap:2px;place-items:center;
+      }
+      footer{padding-bottom:78px}
+    }
+    @media(max-width:520px){
+      .container{width:min(100% - 20px,1180px)}
+      .brand{font-size:20px}.brand-mark{width:38px;height:38px}
+      .nav-actions .btn-primary{padding:10px 11px;font-size:12px}
+      .profile-meta{gap:7px}
+      .info-grid{grid-template-columns:1fr}
+      .branch{flex-direction:column;align-items:flex-start}
+      .panel{padding:18px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="yellowpages_homepage_prototype.html" class="brand">
+        <span class="brand-mark">YP</span>
+        <span>YellowPages.so</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#">Categories</a>
+        <a href="#">Cities</a>
+        <a href="#">Request a Quote</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-outline" href="#">Log in</a>
+        <a class="btn btn-primary" href="#">List Your Business</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container breadcrumbs">Home / Mogadishu / Insurance / Horn Islamic Insurance</div>
+
+    <section class="profile-hero">
+      <div class="container">
+        <div class="cover">
+          <span class="cover-label">Insurance · Mogadishu</span>
+        </div>
+
+        <div class="profile-summary">
+          <div class="logo-box">HIIN</div>
+
+          <div class="title-area">
+            <div class="title-row">
+              <h1>Horn Islamic Insurance</h1>
+              <span class="badge verified">✓ Verified</span>
+              <span class="badge premium">Premium</span>
+            </div>
+            <div class="profile-meta">
+              <span>Insurance & Takaful</span>
+              <span>Hodan, Mogadishu</span>
+              <span class="open">Open now</span>
+            </div>
+            <div class="rating">★★★★★ <strong>4.8</strong> <span style="color:var(--muted)">(42 reviews)</span></div>
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn btn-outline">Call</button>
+            <button class="btn btn-outline">WhatsApp</button>
+            <button class="btn btn-outline">Directions</button>
+            <button class="btn btn-primary" onclick="document.getElementById('quoteForm').scrollIntoView()">Request a Quote</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="tabs-wrap">
+      <nav class="container tabs">
+        <a class="active" href="#overview">Overview</a>
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#branches">Branches</a>
+        <a href="#location">Location</a>
+        <a href="#reviews">Reviews</a>
+      </nav>
+    </div>
+
+    <div class="container page-layout">
+      <div class="content-stack">
+        <section class="panel" id="overview">
+          <h2>About Horn Islamic Insurance</h2>
+          <p>Horn Islamic Insurance provides Sharia-compliant protection for individuals, families, businesses, vehicles, property, health, cargo, and commercial operations. The company supports customers through local claims handling and tailored insurance solutions.</p>
+
+          <div class="info-grid">
+            <div class="info-card"><strong>Established</strong><span>2012</span></div>
+            <div class="info-card"><strong>Business type</strong><span>Insurance and Takaful</span></div>
+            <div class="info-card"><strong>Service area</strong><span>Somalia</span></div>
+            <div class="info-card"><strong>Languages</strong><span>Somali, English, Arabic</span></div>
+            <div class="info-card"><strong>Payment methods</strong><span>EVC Plus, bank transfer</span></div>
+            <div class="info-card"><strong>Profile updated</strong><span>July 2026</span></div>
+          </div>
+        </section>
+
+        <section class="panel" id="services">
+          <h2>Services</h2>
+          <div class="service-list">
+            <article class="service-item">
+              <div class="service-icon">🏥</div>
+              <div><h3>Health Insurance</h3><p>Medical coverage for individuals, families, employees, and organisations.</p></div>
+              <button class="btn btn-outline">Request Quote</button>
+            </article>
+            <article class="service-item">
+              <div class="service-icon">🚗</div>
+              <div><h3>Motor Insurance</h3><p>Coverage for private vehicles, commercial fleets, and third-party liabilities.</p></div>
+              <button class="btn btn-outline">Request Quote</button>
+            </article>
+            <article class="service-item">
+              <div class="service-icon">🏢</div>
+              <div><h3>Property Insurance</h3><p>Protection for offices, homes, warehouses, equipment, and business assets.</p></div>
+              <button class="btn btn-outline">Request Quote</button>
+            </article>
+            <article class="service-item">
+              <div class="service-icon">🚢</div>
+              <div><h3>Marine and Cargo Insurance</h3><p>Protection for cargo, shipments, freight, logistics, and transit risks.</p></div>
+              <button class="btn btn-outline">Request Quote</button>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel" id="gallery">
+          <h2>Gallery</h2>
+          <div class="gallery">
+            <div class="photo">Main office</div>
+            <div class="photo">Customer reception</div>
+            <div class="photo">Claims support</div>
+            <div class="photo">Team</div>
+            <div class="photo">Meeting room</div>
+          </div>
+        </section>
+
+        <section class="panel" id="branches">
+          <h2>Branches</h2>
+          <div class="branch-list">
+            <article class="branch">
+              <div>
+                <h3>Head Office</h3>
+                <p>Hodan District, Mogadishu</p>
+                <p>Saturday–Thursday, 8:00 AM–5:00 PM</p>
+              </div>
+              <button class="btn btn-outline">Get Directions</button>
+            </article>
+            <article class="branch">
+              <div>
+                <h3>Wadajir Service Office</h3>
+                <p>Wadajir District, Mogadishu</p>
+                <p>Saturday–Thursday, 8:30 AM–4:30 PM</p>
+              </div>
+              <button class="btn btn-outline">Get Directions</button>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel" id="location">
+          <h2>Location and opening hours</h2>
+          <div class="map"><div class="map-pin"><span>HIIN</span></div></div>
+          <p><strong>Address:</strong> Hodan District, Mogadishu, Somalia</p>
+
+          <div class="hours-grid">
+            <div>
+              <div class="hours-row"><span>Saturday</span><strong>8:00 AM–5:00 PM</strong></div>
+              <div class="hours-row"><span>Sunday</span><strong>8:00 AM–5:00 PM</strong></div>
+              <div class="hours-row"><span>Monday</span><strong>8:00 AM–5:00 PM</strong></div>
+              <div class="hours-row"><span>Tuesday</span><strong>8:00 AM–5:00 PM</strong></div>
+            </div>
+            <div>
+              <div class="hours-row"><span>Wednesday</span><strong>8:00 AM–5:00 PM</strong></div>
+              <div class="hours-row"><span>Thursday</span><strong>8:00 AM–5:00 PM</strong></div>
+              <div class="hours-row"><span>Friday</span><strong>Closed</strong></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="reviews">
+          <div style="display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:16px">
+            <h2 style="margin:0">Customer reviews</h2>
+            <button class="btn btn-dark">Write a Review</button>
+          </div>
+
+          <div class="review-summary">
+            <div class="rating-big">
+              <strong>4.8</strong>
+              <div>★★★★★</div>
+              <span>Based on 42 reviews</span>
+            </div>
+            <div class="rating-bars">
+              <div class="bar-row"><span>5 stars</span><div class="bar"><span style="width:82%"></span></div><span>82%</span></div>
+              <div class="bar-row"><span>4 stars</span><div class="bar"><span style="width:13%"></span></div><span>13%</span></div>
+              <div class="bar-row"><span>3 stars</span><div class="bar"><span style="width:3%"></span></div><span>3%</span></div>
+              <div class="bar-row"><span>2 stars</span><div class="bar"><span style="width:1%"></span></div><span>1%</span></div>
+              <div class="bar-row"><span>1 star</span><div class="bar"><span style="width:1%"></span></div><span>1%</span></div>
+            </div>
+          </div>
+
+          <div class="review-list">
+            <article class="review">
+              <div class="review-head">
+                <div><h3>Professional and responsive</h3><div>★★★★★</div></div>
+                <span class="review-meta">12 July 2026</span>
+              </div>
+              <p>The team explained the cover clearly and responded quickly when we requested business insurance.</p>
+              <div class="review-meta">Verified customer · Corporate insurance</div>
+              <div class="business-response"><strong>Business response:</strong> Thank you for your feedback. We appreciate your trust in our team.</div>
+            </article>
+
+            <article class="review">
+              <div class="review-head">
+                <div><h3>Helpful claims support</h3><div>★★★★★</div></div>
+                <span class="review-meta">24 June 2026</span>
+              </div>
+              <p>The claims department was helpful and kept us informed throughout the process.</p>
+              <div class="review-meta">Verified customer · Motor insurance</div>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <aside class="sidebar">
+        <section class="contact-card">
+          <h3>Contact business</h3>
+          <div class="contact-row">
+            <span>☎</span>
+            <div><strong>Phone</strong><a href="tel:+252615567963">+252 61 556 7963</a></div>
+          </div>
+          <div class="contact-row">
+            <span>💬</span>
+            <div><strong>WhatsApp</strong><span>Available during business hours</span></div>
+          </div>
+          <div class="contact-row">
+            <span>✉</span>
+            <div><strong>Email</strong><span>info@horninsurance.so</span></div>
+          </div>
+          <div class="contact-row">
+            <span>🌐</span>
+            <div><strong>Website</strong><span>horninsurance.so</span></div>
+          </div>
+          <button class="btn btn-primary" onclick="document.getElementById('quoteForm').scrollIntoView()">Request a Quote</button>
+          <button class="btn btn-outline">Save Business</button>
+        </section>
+
+        <section class="trust-card">
+          <h3>Business verification</h3>
+          <div class="trust-row"><span class="trust-icon">✓</span><span>Phone number verified</span></div>
+          <div class="trust-row"><span class="trust-icon">✓</span><span>Owner identity verified</span></div>
+          <div class="trust-row"><span class="trust-icon">✓</span><span>Business documents verified</span></div>
+          <div class="trust-row"><span class="trust-icon">✓</span><span>Physical location verified</span></div>
+        </section>
+
+        <section class="panel" id="quoteForm">
+          <h2 style="font-size:21px">Request a quotation</h2>
+          <form onsubmit="event.preventDefault(); alert('Quote request submitted in prototype.');">
+            <select style="width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;margin-bottom:10px">
+              <option>Select service</option>
+              <option>Health Insurance</option>
+              <option>Motor Insurance</option>
+              <option>Property Insurance</option>
+              <option>Marine and Cargo</option>
+            </select>
+            <input placeholder="Your name" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;margin-bottom:10px">
+            <input placeholder="Phone or WhatsApp" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;margin-bottom:10px">
+            <textarea placeholder="Describe the cover you need" style="width:100%;min-height:100px;padding:12px;border:1px solid var(--line);border-radius:9px;margin-bottom:10px"></textarea>
+            <button class="btn btn-dark" style="width:100%">Send Request</button>
+          </form>
+        </section>
+
+        <section class="claim-card">
+          <h3>Is this your business?</h3>
+          <p>Claim this profile to update details, respond to reviews, and receive customer leads.</p>
+          <button class="btn btn-dark">Claim This Business</button>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <div class="sticky-mobile-actions">
+    <button><span>☎</span><span>Call</span></button>
+    <button><span>💬</span><span>WhatsApp</span></button>
+    <button><span>⌖</span><span>Directions</span></button>
+    <button onclick="document.getElementById('quoteForm').scrollIntoView()"><span>✉</span><span>Quote</span></button>
+  </div>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© 2026 YellowPages.so</span>
+      <span>Discover. Connect. Grow.</span>
+    </div>
+  </footer>
+</body>
+</html>
