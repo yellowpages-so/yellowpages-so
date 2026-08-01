@@ -1,0 +1,17 @@
+region_code,code,name_en,name_so,slug,latitude,longitude,source,source_version,active
+BN,BN-ABD,Abdiaziz,Cabdicasiis,abdiaziz,,,FSNAU,1986,true
+BN,BN-BND,Boondheere,Boondheere,boondheere,,,FSNAU,1986,true
+BN,BN-DYN,Daynile,Dayniile,daynile,,,FSNAU,1986,true
+BN,BN-DHK,Dharkenley,Dharkeenley,dharkenley,,,FSNAU,1986,true
+BN,BN-HJA,Hamar Jajab,Xamar Jajab,hamar-jajab,,,FSNAU,1986,true
+BN,BN-HWY,Hamar Weyne,Xamar Weyne,hamar-weyne,,,FSNAU,1986,true
+BN,BN-HDN,Hodan,Hodan,hodan,,,FSNAU,1986,true
+BN,BN-HWL,Howlwadaag,Howlwadaag,howlwadaag,,,FSNAU,1986,true
+BN,BN-HRW,Huriwaa,Huriwaa,huriwaa,,,FSNAU,1986,true
+BN,BN-KRN,Karaan,Kaaraan,karaan,,,FSNAU,1986,true
+BN,BN-SHN,Shangaani,Shangaani,shangaani,,,FSNAU,1986,true
+BN,BN-SHB,Shibis,Shibis,shibis,,,FSNAU,1986,true
+BN,BN-WBR,Waberi,Waaberi,waberi,,,FSNAU,1986,true
+BN,BN-WDJ,Wadajir,Wadajir,wadajir,,,FSNAU,1986,true
+BN,BN-WRT,Warta Nabada,Warta Nabadda,warta-nabada,,,FSNAU,1986,true
+BN,BN-YAQ,Yaqshid,Yaaqshiid,yaqshid,,,FSNAU,1986,true

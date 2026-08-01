@@ -1,0 +1,19 @@
+code,name_en,name_so,slug,latitude,longitude,source,source_version,active
+AW,Awdal,Awdal,awdal,,,FSNAU,1986,true
+BK,Bakool,Bakool,bakool,,,FSNAU,1986,true
+BN,Banaadir,Banaadir,banaadir,,,FSNAU,1986,true
+BR,Bari,Bari,bari,,,FSNAU,1986,true
+BY,Bay,Bay,bay,,,FSNAU,1986,true
+GD,Gedo,Gedo,gedo,,,FSNAU,1986,true
+GG,Galgaduud,Galgaduud,galgaduud,,,FSNAU,1986,true
+HR,Hiiraan,Hiiraan,hiiraan,,,FSNAU,1986,true
+JD,Lower Juba,Jubbada Hoose,lower-juba,,,FSNAU,1986,true
+JH,Middle Juba,Jubbada Dhexe,middle-juba,,,FSNAU,1986,true
+SD,Lower Shabelle,Shabeellaha Hoose,lower-shabelle,,,FSNAU,1986,true
+SH,Middle Shabelle,Shabeellaha Dhexe,middle-shabelle,,,FSNAU,1986,true
+MD,Mudug,Mudug,mudug,,,FSNAU,1986,true
+NG,Nugaal,Nugaal,nugaal,,,FSNAU,1986,true
+SG,Sanaag,Sanaag,sanaag,,,FSNAU,1986,true
+SL,Sool,Sool,sool,,,FSNAU,1986,true
+TG,Togdheer,Togdheer,togdheer,,,FSNAU,1986,true
+WG,Woqooyi Galbeed,Woqooyi Galbeed,woqooyi-galbeed,,,FSNAU,1986,true
