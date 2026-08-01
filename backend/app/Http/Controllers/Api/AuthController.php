@@ -117,8 +117,8 @@ class AuthController extends Controller
             ->first();
 
         if (
-            !$record ||
-            !Hash::check($data['password'], $record->password_hash)
+            ! $record ||
+            ! Hash::check($data['password'], $record->password_hash)
         ) {
             throw ValidationException::withMessages([
                 'email' => ['The email address or password is incorrect.'],
