@@ -37,3 +37,4 @@ require __DIR__.'/verification.php';
 require __DIR__.'/admin_portal.php';
 require __DIR__.'/business_owner_portal.php';
 require __DIR__.'/smart_search.php';
+require __DIR__.'/reviews_reputation.php';
