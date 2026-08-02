@@ -1,0 +1,11 @@
+category_slug,slug,name_en,name_so,description,active,keywords
+insurance,health-insurance,Health Insurance,Caymiska Caafimaadka,Medical coverage.,true,medical insurance|health cover
+insurance,motor-insurance,Motor Insurance,Caymiska Gaadiidka,Vehicle insurance.,true,car insurance|vehicle cover
+insurance,marine-insurance,Marine Insurance,Caymiska Badda,Marine risk coverage.,true,ship insurance|marine cover
+insurance,cargo-insurance,Cargo Insurance,Caymiska Xamuulka,Cargo protection.,true,freight insurance|goods cover
+hospitals,emergency-care,Emergency Care,Daryeelka Degdegga,Emergency treatment.,true,emergency|ambulance
+pharmacies,prescription-medicines,Prescription Medicines,Daawo Qoran,Prescription dispensing.,true,medicine|prescription
+restaurants,delivery,Food Delivery,Gaarsiinta Cuntada,Restaurant delivery.,true,delivery|takeaway
+hotels,room-booking,Room Booking,Qabashada Qolka,Room reservations.,true,reservation|accommodation
+logistics,freight-forwarding,Freight Forwarding,Gudbinta Xamuulka,Freight forwarding.,true,freight|shipping|cargo
+technology,computer-repair,Computer Repair,Dayactirka Kombiyuutarka,Computer repair.,true,laptop repair|IT support

@@ -1,0 +1,15 @@
+parent_slug,slug,name_en,name_so,description,icon,featured,active,sort_order,keywords
+,healthcare,Healthcare,Caafimaad,"Hospitals, clinics and pharmacies.",hospital,true,true,10,health|medical|clinic|hospital
+healthcare,hospitals,Hospitals,Isbitaallo,General and specialist hospitals.,building-2,true,true,11,hospital|medical centre
+healthcare,pharmacies,Pharmacies,Farmashiyeyaal,Retail and hospital pharmacies.,pill,true,true,12,pharmacy|medicine
+,finance,Finance,Maaliyad,"Banks, insurance and financial services.",landmark,true,true,20,bank|insurance|finance
+finance,insurance,Insurance,Caymis,Insurance and takaful providers.,shield,true,true,21,insurance|takaful|cover
+finance,banks,Banks,Bangiyo,Commercial and Islamic banks.,banknote,true,true,22,bank|banking
+,food-and-drink,Food and Drink,Cunto iyo Cabitaan,Restaurants and cafes.,utensils,true,true,30,restaurant|food|cafe
+food-and-drink,restaurants,Restaurants,Makhaayado,Restaurants and dining venues.,utensils-crossed,true,true,31,restaurant|dining
+,travel,Travel,Safar,"Hotels, travel and logistics.",plane,true,true,40,travel|hotel|transport
+travel,hotels,Hotels,Hoteello,Hotels and accommodation.,hotel,true,true,41,hotel|accommodation
+travel,logistics,Logistics,Saadka,Freight and transport.,truck,true,true,42,logistics|freight|cargo
+,construction,Construction,Dhismaha,Construction and engineering.,hard-hat,true,true,50,construction|engineering
+,education,Education,Waxbarasho,Schools and universities.,graduation-cap,true,true,60,school|university
+,technology,Technology,Tiknoolajiyad,"IT, software and electronics.",cpu,true,true,70,technology|software|electronics
