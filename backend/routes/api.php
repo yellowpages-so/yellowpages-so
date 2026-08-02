@@ -41,3 +41,4 @@ require __DIR__.'/reviews_reputation.php';
 require __DIR__.'/leads_marketplace.php';
 require __DIR__.'/advertising_monetization.php';
 require __DIR__.'/subscription_billing.php';
+require __DIR__.'/ai_business_intelligence.php';
