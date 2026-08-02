@@ -1,2 +1,2 @@
-region_code,district_code,code,name_en,name_so,slug,latitude,longitude,is_capital,source,source_version,active
-BN,BN-HWY,MGQ,Mogadishu,Muqdisho,mogadishu,2.0469,45.3182,true,YellowPages curated,1.0,true
+region_code,district_code,code,name_en,name_so,slug,latitude,longitude,is_capital,source,source_version,verification_status,active
+BN,BN-HWY,MGQ,Mogadishu,Muqdisho,mogadishu,2.0469,45.3182,true,Curated baseline,1.0,verified,true

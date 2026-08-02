@@ -1,4 +1,4 @@
 city_code,district_code,code,name_en,name_so,slug,latitude,longitude,location_type,source,source_version,verification_status,active
-MGQ,BN-HDN,MGQ-KM4,KM4,KM4,km4,,,landmark_area,YellowPages curated,1.0,pending,true
-MGQ,BN-HDN,MGQ-TAL,Taleex,Taleex,taleex,,,neighbourhood,YellowPages curated,1.0,pending,true
-MGQ,BN-WDJ,MGQ-ZBE,Zoobe,Zoobe,zoobe,,,landmark_area,YellowPages curated,1.0,pending,true
+MGQ,BN-HDN,MGQ-KM4,KM4,KM4,km4,,,landmark_area,Curated baseline,1.0,pending,true
+MGQ,BN-HDN,MGQ-TAL,Taleex,Taleex,taleex,,,neighbourhood,Curated baseline,1.0,pending,true
+MGQ,BN-WDJ,MGQ-ZBE,Zoobe,Zoobe,zoobe,,,landmark_area,Curated baseline,1.0,pending,true

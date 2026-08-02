@@ -1,17 +1,17 @@
-region_code,code,name_en,name_so,slug,latitude,longitude,source,source_version,active
-BN,BN-ABD,Abdiaziz,Cabdicasiis,abdiaziz,,,FSNAU,1986,true
-BN,BN-BND,Boondheere,Boondheere,boondheere,,,FSNAU,1986,true
-BN,BN-DYN,Daynile,Dayniile,daynile,,,FSNAU,1986,true
-BN,BN-DHK,Dharkenley,Dharkeenley,dharkenley,,,FSNAU,1986,true
-BN,BN-HJA,Hamar Jajab,Xamar Jajab,hamar-jajab,,,FSNAU,1986,true
-BN,BN-HWY,Hamar Weyne,Xamar Weyne,hamar-weyne,,,FSNAU,1986,true
-BN,BN-HDN,Hodan,Hodan,hodan,,,FSNAU,1986,true
-BN,BN-HWL,Howlwadaag,Howlwadaag,howlwadaag,,,FSNAU,1986,true
-BN,BN-HRW,Huriwaa,Huriwaa,huriwaa,,,FSNAU,1986,true
-BN,BN-KRN,Karaan,Kaaraan,karaan,,,FSNAU,1986,true
-BN,BN-SHN,Shangaani,Shangaani,shangaani,,,FSNAU,1986,true
-BN,BN-SHB,Shibis,Shibis,shibis,,,FSNAU,1986,true
-BN,BN-WBR,Waberi,Waaberi,waberi,,,FSNAU,1986,true
-BN,BN-WDJ,Wadajir,Wadajir,wadajir,,,FSNAU,1986,true
-BN,BN-WRT,Warta Nabada,Warta Nabadda,warta-nabada,,,FSNAU,1986,true
-BN,BN-YAQ,Yaqshid,Yaaqshiid,yaqshid,,,FSNAU,1986,true
+region_code,code,name_en,name_so,slug,latitude,longitude,source,source_version,verification_status,active
+BN,BN-ABD,Abdiaziz,Cabdicasiis,abdiaziz,,,Curated baseline,1.0,pending,true
+BN,BN-BND,Boondheere,Boondheere,boondheere,,,Curated baseline,1.0,pending,true
+BN,BN-DYN,Daynile,Dayniile,daynile,,,Curated baseline,1.0,pending,true
+BN,BN-DHK,Dharkenley,Dharkeenley,dharkenley,,,Curated baseline,1.0,pending,true
+BN,BN-HJA,Hamar Jajab,Xamar Jajab,hamar-jajab,,,Curated baseline,1.0,pending,true
+BN,BN-HWY,Hamar Weyne,Xamar Weyne,hamar-weyne,2.0350,45.3410,Curated baseline,1.0,pending,true
+BN,BN-HDN,Hodan,Hodan,hodan,2.0310,45.3150,Curated baseline,1.0,pending,true
+BN,BN-HWL,Howlwadaag,Howlwadaag,howlwadaag,,,Curated baseline,1.0,pending,true
+BN,BN-HRW,Huriwaa,Huriwaa,huriwaa,,,Curated baseline,1.0,pending,true
+BN,BN-KRN,Karaan,Kaaraan,karaan,,,Curated baseline,1.0,pending,true
+BN,BN-SHN,Shangaani,Shangaani,shangaani,,,Curated baseline,1.0,pending,true
+BN,BN-SHB,Shibis,Shibis,shibis,,,Curated baseline,1.0,pending,true
+BN,BN-WBR,Waberi,Waaberi,waberi,,,Curated baseline,1.0,pending,true
+BN,BN-WDJ,Wadajir,Wadajir,wadajir,,,Curated baseline,1.0,pending,true
+BN,BN-WRT,Warta Nabada,Warta Nabadda,warta-nabada,,,Curated baseline,1.0,pending,true
+BN,BN-YAQ,Yaqshid,Yaaqshiid,yaqshid,,,Curated baseline,1.0,pending,true
