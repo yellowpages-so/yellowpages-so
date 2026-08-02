@@ -44,3 +44,4 @@ require __DIR__.'/subscription_billing.php';
 require __DIR__.'/ai_business_intelligence.php';
 require __DIR__.'/notifications_communication.php';
 require __DIR__.'/media_management.php';
+require __DIR__.'/developer_integration.php';

@@ -1,0 +1,44 @@
+openapi: 3.1.0
+info:
+  title: YellowPages.so Developer API
+  version: 1.0.0
+  description: Public integration API for YellowPages.so.
+servers:
+  - url: http://127.0.0.1:8000/api/public/v1
+    description: Local development
+paths:
+  /health:
+    get:
+      summary: API health
+      responses:
+        "200":
+          description: Healthy
+  /businesses:
+    get:
+      summary: Search published businesses
+      security:
+        - ApiKey: []
+          ApiSecret: []
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            maximum: 100
+      responses:
+        "200":
+          description: Business list
+components:
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    ApiSecret:
+      type: apiKey
+      in: header
+      name: X-API-Secret
