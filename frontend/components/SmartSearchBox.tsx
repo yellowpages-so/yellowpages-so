@@ -22,7 +22,6 @@ export function SmartSearchBox() {
     const value = query.trim();
 
     if (value.length < 2) {
-      setSuggestions([]);
       return;
     }
 
@@ -55,7 +54,15 @@ export function SmartSearchBox() {
           <input
             name="q"
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => {
+              const value = event.target.value;
+              setQuery(value);
+
+              if (value.trim().length < 2) {
+                setSuggestions([]);
+                setOpen(false);
+              }
+            }}
             onFocus={() => setOpen(true)}
             className="h-13 min-w-0 flex-1 bg-transparent outline-none"
             placeholder="Business, service, or category"
