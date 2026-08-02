@@ -27,9 +27,13 @@ export function CategoryGrid({
 }: {
   categories: Category[];
 }) {
+  const safeCategories = Array.isArray(categories)
+    ? categories
+    : [];
+
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-      {categories.slice(0, 8).map((category, index) => {
+      {safeCategories.slice(0, 8).map((category, index) => {
         const Icon = icons[index % icons.length];
 
         return (

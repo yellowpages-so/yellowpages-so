@@ -1,7 +1,6 @@
 import type {
   Business,
   Category,
-  PaginatedCategories,
   SearchResponse,
 } from "@/lib/types";
 
@@ -41,10 +40,28 @@ export async function getCategoryTree(): Promise<Category[]> {
 }
 
 export async function getCategories(): Promise<Category[]> {
-  const result =
-    await apiFetch<PaginatedCategories>("/v1/categories");
+  const result = await apiFetch<
+    | { data: Category[] }
+    | { data: { data: Category[] } }
+  >("/v1/categories");
 
-  return result?.data ?? [];
+  if (!result) {
+    return [];
+  }
+
+  if (Array.isArray(result.data)) {
+    return result.data;
+  }
+
+  if (
+    result.data &&
+    typeof result.data === "object" &&
+    Array.isArray(result.data.data)
+  ) {
+    return result.data.data;
+  }
+
+  return [];
 }
 
 export async function searchBusinesses(
