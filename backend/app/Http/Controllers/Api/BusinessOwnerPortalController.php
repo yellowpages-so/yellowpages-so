@@ -14,6 +14,7 @@ use App\Services\BusinessOwnerPortalService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use RuntimeException;
 
@@ -177,22 +178,75 @@ class BusinessOwnerPortalController extends Controller
         StoreBusinessHoursRequest $request,
         Business $business
     ): JsonResponse {
-        $this->service->assertManager($request->user(), $business);
+        $this->service->assertManager(
+            $request->user(),
+            $business
+        );
 
-        DB::transaction(function () use ($business, $request): void {
-            DB::table('directory.business_opening_hours')
-                ->where('business_id', $business->id)
-                ->delete();
+        $branchId = DB::table(
+            'directory.business_branches'
+        )
+            ->where('business_id', $business->id)
+            ->orderByDesc('is_head_office')
+            ->value('id');
 
-            foreach ($request->validated()['hours'] as $row) {
-                DB::table('directory.business_opening_hours')->insert([
+        if (! $branchId) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Add a business branch before saving opening hours.',
+            ], 422);
+        }
+
+        DB::transaction(function () use (
+            $business,
+            $branchId,
+            $request
+        ): void {
+            $query = DB::table(
+                'directory.business_opening_hours'
+            );
+
+            if (
+                Schema::hasColumn(
+                    'directory.business_opening_hours',
+                    'business_id'
+                )
+            ) {
+                $query->where(
+                    'business_id',
+                    $business->id
+                );
+            } else {
+                $query->where('branch_id', $branchId);
+            }
+
+            $query->delete();
+
+            foreach (
+                $request->validated()['hours'] as $row
+            ) {
+                $record = [
                     'id' => (string) Str::uuid(),
-                    'business_id' => $business->id,
                     'day_of_week' => $row['day_of_week'],
                     'is_closed' => $row['is_closed'] ?? false,
                     'open_time' => $row['open_time'] ?? null,
                     'close_time' => $row['close_time'] ?? null,
-                ]);
+                ];
+
+                if (
+                    Schema::hasColumn(
+                        'directory.business_opening_hours',
+                        'business_id'
+                    )
+                ) {
+                    $record['business_id'] = $business->id;
+                } else {
+                    $record['branch_id'] = $branchId;
+                }
+
+                DB::table(
+                    'directory.business_opening_hours'
+                )->insert($record);
             }
         });
 

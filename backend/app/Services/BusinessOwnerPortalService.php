@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Business;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use RuntimeException;
 
@@ -39,20 +40,84 @@ class BusinessOwnerPortalService
                     ->whereIn('id', $businessIds)
                     ->where('status', 'published')
                     ->count(),
-                'open_leads' => DB::table('leads.leads')
-                    ->whereIn('business_id', $businessIds)
-                    ->whereIn('status', ['new', 'open', 'assigned'])
-                    ->count(),
-                'pending_reviews' => DB::table('reviews.reviews')
-                    ->whereIn('business_id', $businessIds)
-                    ->whereNull('business_reply')
-                    ->count(),
+                'open_leads' => $this->countOpenLeads($businessIds->all()),
+                'pending_reviews' => $this->countPendingReviews(
+                    $businessIds->all()
+                ),
                 'pending_verification' => DB::table('verification.verification_requests')
                     ->whereIn('business_id', $businessIds)
                     ->whereIn('status', ['submitted', 'under_review', 'information_requested'])
                     ->count(),
             ],
         ];
+    }
+
+    private function countOpenLeads(array $businessIds): int
+    {
+        if ($businessIds === []) {
+            return 0;
+        }
+
+        foreach ([
+            'business_id',
+            'recipient_business_id',
+            'target_business_id',
+        ] as $column) {
+            if (Schema::hasColumn('leads.leads', $column)) {
+                return DB::table('leads.leads')
+                    ->whereIn($column, $businessIds)
+                    ->whereIn('status', [
+                        'new',
+                        'open',
+                        'assigned',
+                    ])
+                    ->count();
+            }
+        }
+
+        return 0;
+    }
+
+    private function countPendingReviews(array $businessIds): int
+    {
+        if ($businessIds === []) {
+            return 0;
+        }
+
+        if (
+            Schema::hasColumn('reviews.reviews', 'business_reply')
+        ) {
+            return DB::table('reviews.reviews')
+                ->whereIn('business_id', $businessIds)
+                ->whereNull('business_reply')
+                ->count();
+        }
+
+        if (
+            Schema::hasColumn('reviews.reviews', 'reply_text')
+        ) {
+            return DB::table('reviews.reviews')
+                ->whereIn('business_id', $businessIds)
+                ->whereNull('reply_text')
+                ->count();
+        }
+
+        if (Schema::hasTable('reviews.review_replies')) {
+            return DB::table('reviews.reviews as reviews')
+                ->leftJoin(
+                    'reviews.review_replies as replies',
+                    'replies.review_id',
+                    '=',
+                    'reviews.id'
+                )
+                ->whereIn('reviews.business_id', $businessIds)
+                ->whereNull('replies.id')
+                ->count('reviews.id');
+        }
+
+        return DB::table('reviews.reviews')
+            ->whereIn('business_id', $businessIds)
+            ->count();
     }
 
     public function recalculateProgress(Business $business): array
@@ -74,9 +139,7 @@ class BusinessOwnerPortalService
                 ->where('business_id', $business->id)
                 ->where('active', true)
                 ->exists(),
-            'hours' => DB::table('directory.business_opening_hours')
-                ->where('business_id', $business->id)
-                ->exists(),
+            'hours' => $this->hasOpeningHours($business),
             'media' => filled($business->logo_url)
                 || DB::table('directory.business_media')
                     ->where('business_id', $business->id)
@@ -135,6 +198,41 @@ class BusinessOwnerPortalService
             'total_score' => $total,
             'missing_items' => $missing,
         ];
+    }
+
+    private function hasOpeningHours(Business $business): bool
+    {
+        if (
+            Schema::hasColumn(
+                'directory.business_opening_hours',
+                'business_id'
+            )
+        ) {
+            return DB::table('directory.business_opening_hours')
+                ->where('business_id', $business->id)
+                ->exists();
+        }
+
+        if (
+            Schema::hasColumn(
+                'directory.business_opening_hours',
+                'branch_id'
+            )
+        ) {
+            $branchIds = DB::table('directory.business_branches')
+                ->where('business_id', $business->id)
+                ->pluck('id');
+
+            if ($branchIds->isEmpty()) {
+                return false;
+            }
+
+            return DB::table('directory.business_opening_hours')
+                ->whereIn('branch_id', $branchIds)
+                ->exists();
+        }
+
+        return false;
     }
 
     public function assertManager(User $user, Business $business): void
