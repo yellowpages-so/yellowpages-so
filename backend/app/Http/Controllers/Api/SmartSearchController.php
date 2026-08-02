@@ -7,14 +7,12 @@ use App\Services\SmartSearchService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class SmartSearchController extends Controller
 {
     public function __construct(
         private readonly SmartSearchService $searchService
-    ) {
-    }
+    ) {}
 
     public function search(Request $request): JsonResponse
     {
@@ -34,15 +32,17 @@ class SmartSearchController extends Controller
         $result = $this->searchService->search($filters);
 
         DB::table('analytics.search_events')->insert([
-            'id' => (string) Str::uuid(),
             'user_id' => $request->user()?->id,
-            'session_id' => $request->header('X-Search-Session'),
             'query' => $filters['q'] ?? null,
-            'filters' => json_encode($filters),
-            'result_count' => $result['estimated_total_hits'] ?? count($result['hits'] ?? []),
-            'processing_time_ms' => $result['processing_time_ms'],
-            'source' => $result['source'],
-            'created_at' => now(),
+            'result_count' => $result['estimated_total_hits']
+                ?? count($result['hits'] ?? []),
+            'occurred_at' => now(),
+            'metadata' => json_encode([
+                'filters' => $filters,
+                'processing_time_ms' => $result['processing_time_ms'],
+                'source' => $result['source'],
+                'session_id' => $request->header('X-Search-Session'),
+            ]),
         ]);
 
         return response()->json([
