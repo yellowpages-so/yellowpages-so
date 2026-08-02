@@ -33,3 +33,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('businesses', BusinessController::class);
 });
 require __DIR__.'/directory_core.php';
+require __DIR__.'/verification.php';
+require __DIR__.'/admin_portal.php';
