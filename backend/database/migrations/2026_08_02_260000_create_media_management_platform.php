@@ -9,6 +9,7 @@ return new class extends Migration
 {
     public function up(): void
     {
+        DB::statement('CREATE SCHEMA IF NOT EXISTS media');
         if (! Schema::hasTable('media.assets')) {
             Schema::create('media.assets', function (Blueprint $table): void {
                 $table->uuid('id')->primary();

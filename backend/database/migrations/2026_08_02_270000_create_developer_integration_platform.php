@@ -9,6 +9,7 @@ return new class extends Migration
 {
     public function up(): void
     {
+        DB::statement('CREATE SCHEMA IF NOT EXISTS developer');
         Schema::create('developer.api_clients', function (Blueprint $table): void {
             $table->uuid('id')->primary();
             $table->uuid('business_id')->nullable();

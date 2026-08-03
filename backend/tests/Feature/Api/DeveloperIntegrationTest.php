@@ -30,6 +30,12 @@ class DeveloperIntegrationTest extends TestCase
             ]
         );
 
+        fwrite(
+            STDERR,
+            "\nDEVELOPER STATUS: ".$response->status().
+            "\nDEVELOPER BODY: ".$response->getContent()."\n"
+        );
+
         $response
             ->assertCreated()
             ->assertJsonPath('success', true);

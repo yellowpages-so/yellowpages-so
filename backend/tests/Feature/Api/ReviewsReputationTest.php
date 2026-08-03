@@ -41,8 +41,6 @@ class ReviewsReputationTest extends TestCase
             ]
         );
 
-        dump($response->json());
-
         $response
             ->assertCreated()
             ->assertJsonPath('success', true);

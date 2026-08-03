@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('billing_interval')->default('month');
+            $table->string('billing_interval')->default('monthly');
             $table->decimal('price', 14, 2)->default(0);
             $table->string('currency', 3)->default('USD');
             $table->unsignedInteger('trial_days')->default(0);
@@ -194,10 +194,10 @@ return new class extends Migration
         }
 
         $plans = [
-            ['free', 'Free', 'month', 0, 0],
-            ['starter', 'Starter', 'month', 15, 14],
-            ['professional', 'Professional', 'month', 39, 14],
-            ['enterprise', 'Enterprise', 'month', 99, 30],
+            ['free', 'Free', 'monthly', 0, 0],
+            ['starter', 'Starter', 'monthly', 15, 14],
+            ['professional', 'Professional', 'monthly', 39, 14],
+            ['enterprise', 'Enterprise', 'monthly', 99, 30],
         ];
 
         foreach ($plans as [$code, $name, $interval, $price, $trial]) {

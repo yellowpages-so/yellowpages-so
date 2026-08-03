@@ -14,6 +14,21 @@ class SubscriptionBillingTest extends TestCase
 {
     public function test_owner_can_start_subscription(): void
     {
+        DB::table('billing.plans')->updateOrInsert(
+            ['code' => 'starter'],
+            [
+                'id' => DB::table('billing.plans')
+                    ->where('code', 'starter')
+                    ->value('id') ?? (string) Str::uuid(),
+                'name' => 'Starter',
+                'billing_interval' => 'monthly',
+                'price' => 15,
+                'currency' => 'USD',
+                'active' => true,
+                'created_at' => now(),
+            ]
+        );
+
         $user = User::query()->create([
             'public_id' => 'test-'.Str::ulid(),
             'status' => 'active',
@@ -47,6 +62,13 @@ class SubscriptionBillingTest extends TestCase
             'plan_code' => 'starter',
             'payment_provider' => 'manual',
         ]);
+
+        if ($response->status() !== 201) {
+            throw new \RuntimeException(
+                'BILLING STATUS: '.$response->status().
+                "\nBILLING BODY: ".$response->getContent()
+            );
+        }
 
         $response
             ->assertCreated()

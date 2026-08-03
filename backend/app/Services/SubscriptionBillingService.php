@@ -25,7 +25,7 @@ class SubscriptionBillingService
 
         $active = DB::table('billing.subscriptions')
             ->where('business_id', $data['business_id'])
-            ->whereIn('status', ['trialing', 'active', 'past_due'])
+            ->whereIn('status', ['trial', 'active', 'past_due'])
             ->first();
 
         if ($active) {
@@ -34,33 +34,31 @@ class SubscriptionBillingService
 
         return DB::transaction(function () use ($user, $data, $plan): array {
             $now = CarbonImmutable::now();
-            $trialEnds = $plan->trial_days > 0
-                ? $now->addDays((int) $plan->trial_days)
+            $trialDays = property_exists($plan, 'trial_days')
+                ? (int) $plan->trial_days
+                : 0;
+
+            $trialEnds = $trialDays > 0
+                ? $now->addDays($trialDays)
                 : null;
 
             $periodStart = $trialEnds ?? $now;
-            $periodEnd = $plan->billing_interval === 'year'
+            $periodEnd = $plan->billing_interval === 'yearly'
                 ? $periodStart->addYear()
                 : $periodStart->addMonth();
 
             $subscriptionId = (string) Str::uuid();
-            $status = $trialEnds ? 'trialing' : 'active';
+            $status = $trialEnds ? 'trial' : 'active';
 
             DB::table('billing.subscriptions')->insert([
                 'id' => $subscriptionId,
                 'business_id' => $data['business_id'],
                 'plan_id' => $plan->id,
-                'created_by' => $user->id,
                 'status' => $status,
-                'trial_ends_at' => $trialEnds,
-                'current_period_starts_at' => $periodStart,
-                'current_period_ends_at' => $periodEnd,
-                'payment_provider' => $data['payment_provider'] ?? 'manual',
-                'metadata' => json_encode([
-                    'coupon_code' => $data['coupon_code'] ?? null,
-                ]),
+                'starts_at' => $periodStart,
+                'ends_at' => $periodEnd,
+                'auto_renew' => true,
                 'created_at' => now(),
-                'updated_at' => now(),
             ]);
 
             $invoice = $this->createInvoice(
@@ -180,8 +178,8 @@ class SubscriptionBillingService
             ->select([
                 'subscriptions.id as subscription_id',
                 'subscriptions.status',
-                'subscriptions.current_period_starts_at',
-                'subscriptions.current_period_ends_at',
+                'subscriptions.starts_at as current_period_starts_at',
+                'subscriptions.ends_at as current_period_ends_at',
                 'plans.id as plan_id',
                 'plans.code as plan_code',
                 'plans.name as plan_name',
@@ -278,7 +276,7 @@ class SubscriptionBillingService
         $count = 0;
 
         DB::table('billing.subscriptions')
-            ->whereIn('status', ['trialing', 'active', 'past_due'])
+            ->whereIn('status', ['trial', 'active', 'past_due'])
             ->where('current_period_ends_at', '<=', now())
             ->orderBy('id')
             ->chunkById(100, function ($subscriptions) use (&$count): void {
@@ -307,7 +305,7 @@ class SubscriptionBillingService
                         $subscription->current_period_ends_at
                     );
 
-                    $end = $plan->billing_interval === 'year'
+                    $end = $plan->billing_interval === 'yearly'
                         ? $start->addYear()
                         : $start->addMonth();
 
@@ -378,24 +376,18 @@ class SubscriptionBillingService
 
         DB::table('billing.invoices')->insert([
             'id' => $invoiceId,
+            'invoice_no' => $invoiceNo,
             'business_id' => $businessId,
             'subscription_id' => $subscriptionId,
-            'coupon_id' => $coupon?->id,
-            'invoice_no' => $invoiceNo,
-            'status' => $total <= 0 ? 'paid' : 'open',
+            'status' => $total <= 0 ? 'paid' : 'issued',
             'currency' => $plan->currency,
             'subtotal' => $subtotal,
-            'discount_amount' => $discount,
-            'tax_amount' => 0,
-            'total_amount' => $total,
-            'issued_on' => now()->toDateString(),
-            'due_on' => now()->addDays(7)->toDateString(),
-            'paid_at' => $total <= 0 ? now() : null,
-            'metadata' => json_encode([
-                'plan_code' => $plan->code,
-            ]),
+            'tax_total' => 0,
+            'total' => $total,
+            'amount_paid' => $total <= 0 ? $total : 0,
+            'issued_at' => now(),
+            'due_at' => now()->addDays(7),
             'created_at' => now(),
-            'updated_at' => now(),
         ]);
 
         DB::table('billing.invoice_items')->insert([
@@ -414,7 +406,7 @@ class SubscriptionBillingService
             'invoice_no' => $invoiceNo,
             'total_amount' => $total,
             'currency' => $plan->currency,
-            'status' => $total <= 0 ? 'paid' : 'open',
+            'status' => $total <= 0 ? 'paid' : 'issued',
         ];
     }
 
