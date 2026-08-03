@@ -47,3 +47,4 @@ require __DIR__.'/media_management.php';
 require __DIR__.'/developer_integration.php';
 require __DIR__.'/security_compliance.php';
 require __DIR__.'/marketplace_commerce.php';
+require __DIR__.'/payments_platform.php';
