@@ -49,3 +49,4 @@ require __DIR__.'/security_compliance.php';
 require __DIR__.'/marketplace_commerce.php';
 require __DIR__.'/payments_platform.php';
 require __DIR__.'/analytics_reporting.php';
+require __DIR__.'/cms_content.php';
