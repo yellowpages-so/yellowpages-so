@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use RuntimeException;
 
@@ -58,7 +59,6 @@ class SubscriptionBillingService
                 'starts_at' => $periodStart,
                 'ends_at' => $periodEnd,
                 'auto_renew' => true,
-                'created_at' => now(),
             ]);
 
             $invoice = $this->createInvoice(
@@ -387,7 +387,6 @@ class SubscriptionBillingService
             'amount_paid' => $total <= 0 ? $total : 0,
             'issued_at' => now(),
             'due_at' => now()->addDays(7),
-            'created_at' => now(),
         ]);
 
         DB::table('billing.invoice_items')->insert([
@@ -397,8 +396,6 @@ class SubscriptionBillingService
             'quantity' => 1,
             'unit_price' => $subtotal,
             'line_total' => $subtotal,
-            'metadata' => json_encode([]),
-            'created_at' => now(),
         ]);
 
         return [
@@ -429,6 +426,12 @@ class SubscriptionBillingService
         string $eventType,
         array $metadata
     ): void {
+        if (! Schema::hasTable(
+            'billing.subscription_events'
+        )) {
+            return;
+        }
+
         DB::table('billing.subscription_events')->insert([
             'id' => (string) Str::uuid(),
             'subscription_id' => $subscriptionId,

@@ -68,11 +68,6 @@ return new class extends Migration
                     ->on('directory.businesses')
                     ->cascadeOnDelete();
 
-                $table->foreign('parent_id')
-                    ->references('id')
-                    ->on('commerce.product_categories')
-                    ->nullOnDelete();
-
                 $table->unique(['business_id', 'slug']);
             });
         }

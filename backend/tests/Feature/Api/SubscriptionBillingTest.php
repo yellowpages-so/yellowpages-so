@@ -6,6 +6,7 @@ use App\Models\Business;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
@@ -81,9 +82,13 @@ class SubscriptionBillingTest extends TestCase
             'business_id' => $business->id,
         ]);
 
-        DB::table('billing.subscription_events')
-            ->where('subscription_id', $subscriptionId)
-            ->delete();
+        if (Schema::hasTable(
+            'billing.subscription_events'
+        )) {
+            DB::table('billing.subscription_events')
+                ->where('subscription_id', $subscriptionId)
+                ->delete();
+        }
 
         $invoiceIds = DB::table('billing.invoices')
             ->where('subscription_id', $subscriptionId)
@@ -101,9 +106,13 @@ class SubscriptionBillingTest extends TestCase
             ->whereIn('id', $invoiceIds)
             ->delete();
 
-        DB::table('billing.subscription_usage')
-            ->where('subscription_id', $subscriptionId)
-            ->delete();
+        if (Schema::hasTable(
+            'billing.subscription_usage'
+        )) {
+            DB::table('billing.subscription_usage')
+                ->where('subscription_id', $subscriptionId)
+                ->delete();
+        }
 
         DB::table('billing.subscriptions')
             ->where('id', $subscriptionId)
