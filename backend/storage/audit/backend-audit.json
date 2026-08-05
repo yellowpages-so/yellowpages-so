@@ -1,0 +1,598 @@
+{
+  "project": "YellowPages.so backend",
+  "audit_score": 0,
+  "severity_counts": {
+    "critical": 1,
+    "high": 12,
+    "medium": 43
+  },
+  "summary": {
+    "migrations": {
+      "migration_count": 29,
+      "duplicate_tables": {},
+      "duplicate_schemas": {}
+    },
+    "code": {
+      "app_php_files": 137,
+      "large_files": [
+        {
+          "file": "app/Console/Commands/ImportSomaliaGeography.php",
+          "lines": 412
+        },
+        {
+          "file": "app/Http/Controllers/Api/BusinessOwnerPortalController.php",
+          "lines": 411
+        },
+        {
+          "file": "app/Services/AdvertisingService.php",
+          "lines": 307
+        },
+        {
+          "file": "app/Services/CmsContentService.php",
+          "lines": 396
+        },
+        {
+          "file": "app/Services/CommerceService.php",
+          "lines": 355
+        },
+        {
+          "file": "app/Services/CommunicationManager.php",
+          "lines": 337
+        },
+        {
+          "file": "app/Services/LeadMarketplaceService.php",
+          "lines": 340
+        },
+        {
+          "file": "app/Services/MediaManagementService.php",
+          "lines": 447
+        },
+        {
+          "file": "app/Services/SubscriptionBillingService.php",
+          "lines": 445
+        },
+        {
+          "file": "app/Services/WorkflowAutomationService.php",
+          "lines": 494
+        }
+      ],
+      "duplicate_classes": {}
+    },
+    "routes": {
+      "route_count": 174,
+      "public_write_routes": [
+        "POST api/auth/login",
+        "POST api/auth/register",
+        "POST api/v1/commerce/cart/items",
+        "POST api/v1/commerce/checkout",
+        "POST api/v1/compliance/privacy-requests",
+        "POST api/v1/payments/intents",
+        "POST api/v1/payments/intents/{intentId}/capture",
+        "POST api/v1/quote-requests",
+        "POST api/v1/reporting/events",
+        "POST api/v1/support/tickets",
+        "PUT storage/{path}"
+      ]
+    },
+    "configuration": {
+      ".env": "present",
+      ".env.testing": "present",
+      ".env.production": "present"
+    },
+    "tests": {
+      "test_files": 27,
+      "service_files": 26,
+      "test_output_looks_green": true
+    },
+    "dependencies": {
+      "composer_audit_excerpt": "No security vulnerability advisories found.\n",
+      "composer_outdated_excerpt": "Legend:\n! patch or minor release available - update recommended\n~ major release available - update possible\nlaravel/framework 12.64.0 ~ 13.23.0 The Laravel Framework.\nlaravel/pint      1.30.2  ! 1.30.3  An opinionated code formatter for PHP.\nlaravel/tinker    2.11.1  ~ 3.0.2   Powerful REPL for the Laravel framework.\nphpunit/phpunit   11.5.56 ~ 13.2.6  The PHP Unit Testing framework.\n"
+    }
+  },
+  "findings": [
+    {
+      "severity": "critical",
+      "category": "security",
+      "title": "Placeholder production secret",
+      "evidence": "Unsafe placeholder detected.",
+      "recommendation": "Replace placeholders through a secret manager.",
+      "file": ".env.production",
+      "line": null
+    },
+    {
+      "severity": "high",
+      "category": "security",
+      "title": "Database password stored in phpunit.xml",
+      "evidence": "DB_PASSWORD is defined in phpunit.xml.",
+      "recommendation": "Load the password from .env.testing or CI secrets.",
+      "file": "phpunit.xml",
+      "line": null
+    },
+    {
+      "severity": "high",
+      "category": "security",
+      "title": "Unauthenticated write route requires review",
+      "evidence": "POST api/auth/login",
+      "recommendation": "Confirm it is intentionally public. Add throttling, validation, abuse controls, and audit logging.",
+      "file": null,
+      "line": null
+    },
+    {
+      "severity": "high",
+      "category": "security",
+      "title": "Unauthenticated write route requires review",
+      "evidence": "POST api/auth/register",
+      "recommendation": "Confirm it is intentionally public. Add throttling, validation, abuse controls, and audit logging.",
+      "file": null,
+      "line": null
+    },
+    {
+      "severity": "high",
+      "category": "security",
+      "title": "Unauthenticated write route requires review",
+      "evidence": "POST api/v1/commerce/cart/items",
+      "recommendation": "Confirm it is intentionally public. Add throttling, validation, abuse controls, and audit logging.",
+      "file": null,
+      "line": null
+    },
+    {
+      "severity": "high",
+      "category": "security",
+      "title": "Unauthenticated write route requires review",
+      "evidence": "POST api/v1/commerce/checkout",
+      "recommendation": "Confirm it is intentionally public. Add throttling, validation, abuse controls, and audit logging.",
+      "file": null,
+      "line": null
+    },
+    {
+      "severity": "high",
+      "category": "security",
+      "title": "Unauthenticated write route requires review",
+      "evidence": "POST api/v1/compliance/privacy-requests",
+      "recommendation": "Confirm it is intentionally public. Add throttling, validation, abuse controls, and audit logging.",
+      "file": null,
+      "line": null
+    },
+    {
+      "severity": "high",
+      "category": "security",
+      "title": "Unauthenticated write route requires review",
+      "evidence": "POST api/v1/payments/intents",
+      "recommendation": "Confirm it is intentionally public. Add throttling, validation, abuse controls, and audit logging.",
+      "file": null,
+      "line": null
+    },
+    {
+      "severity": "high",
+      "category": "security",
+      "title": "Unauthenticated write route requires review",
+      "evidence": "POST api/v1/payments/intents/{intentId}/capture",
+      "recommendation": "Confirm it is intentionally public. Add throttling, validation, abuse controls, and audit logging.",
+      "file": null,
+      "line": null
+    },
+    {
+      "severity": "high",
+      "category": "security",
+      "title": "Unauthenticated write route requires review",
+      "evidence": "POST api/v1/quote-requests",
+      "recommendation": "Confirm it is intentionally public. Add throttling, validation, abuse controls, and audit logging.",
+      "file": null,
+      "line": null
+    },
+    {
+      "severity": "high",
+      "category": "security",
+      "title": "Unauthenticated write route requires review",
+      "evidence": "POST api/v1/reporting/events",
+      "recommendation": "Confirm it is intentionally public. Add throttling, validation, abuse controls, and audit logging.",
+      "file": null,
+      "line": null
+    },
+    {
+      "severity": "high",
+      "category": "security",
+      "title": "Unauthenticated write route requires review",
+      "evidence": "POST api/v1/support/tickets",
+      "recommendation": "Confirm it is intentionally public. Add throttling, validation, abuse controls, and audit logging.",
+      "file": null,
+      "line": null
+    },
+    {
+      "severity": "high",
+      "category": "security",
+      "title": "Unauthenticated write route requires review",
+      "evidence": "PUT storage/{path}",
+      "recommendation": "Confirm it is intentionally public. Add throttling, validation, abuse controls, and audit logging.",
+      "file": null,
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "architecture",
+      "title": "Runtime schema compatibility logic",
+      "evidence": "app/Http/Controllers/Api/BusinessOwnerPortalController.php",
+      "recommendation": "Move schema compatibility into migrations or upgrade commands. Application services should target one stable schema.",
+      "file": "app/Http/Controllers/Api/BusinessOwnerPortalController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "architecture",
+      "title": "Runtime schema compatibility logic",
+      "evidence": "app/Http/Controllers/Api/ReviewController.php",
+      "recommendation": "Move schema compatibility into migrations or upgrade commands. Application services should target one stable schema.",
+      "file": "app/Http/Controllers/Api/ReviewController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "architecture",
+      "title": "Runtime schema compatibility logic",
+      "evidence": "app/Services/AiBusinessIntelligenceService.php",
+      "recommendation": "Move schema compatibility into migrations or upgrade commands. Application services should target one stable schema.",
+      "file": "app/Services/AiBusinessIntelligenceService.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "architecture",
+      "title": "Runtime schema compatibility logic",
+      "evidence": "app/Services/BusinessOwnerPortalService.php",
+      "recommendation": "Move schema compatibility into migrations or upgrade commands. Application services should target one stable schema.",
+      "file": "app/Services/BusinessOwnerPortalService.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "architecture",
+      "title": "Runtime schema compatibility logic",
+      "evidence": "app/Services/CmsContentService.php",
+      "recommendation": "Move schema compatibility into migrations or upgrade commands. Application services should target one stable schema.",
+      "file": "app/Services/CmsContentService.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "architecture",
+      "title": "Runtime schema compatibility logic",
+      "evidence": "app/Services/ReviewReputationService.php",
+      "recommendation": "Move schema compatibility into migrations or upgrade commands. Application services should target one stable schema.",
+      "file": "app/Services/ReviewReputationService.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "architecture",
+      "title": "Runtime schema compatibility logic",
+      "evidence": "app/Services/SubscriptionBillingService.php",
+      "recommendation": "Move schema compatibility into migrations or upgrade commands. Application services should target one stable schema.",
+      "file": "app/Services/SubscriptionBillingService.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "maintainability",
+      "title": "Large PHP file: app/Console/Commands/ImportSomaliaGeography.php",
+      "evidence": "412 lines",
+      "recommendation": "Split responsibilities into smaller services, actions, requests, resources, or policies.",
+      "file": "app/Console/Commands/ImportSomaliaGeography.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "maintainability",
+      "title": "Large PHP file: app/Http/Controllers/Api/BusinessOwnerPortalController.php",
+      "evidence": "411 lines",
+      "recommendation": "Split responsibilities into smaller services, actions, requests, resources, or policies.",
+      "file": "app/Http/Controllers/Api/BusinessOwnerPortalController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "maintainability",
+      "title": "Large PHP file: app/Services/AdvertisingService.php",
+      "evidence": "307 lines",
+      "recommendation": "Split responsibilities into smaller services, actions, requests, resources, or policies.",
+      "file": "app/Services/AdvertisingService.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "maintainability",
+      "title": "Large PHP file: app/Services/CmsContentService.php",
+      "evidence": "396 lines",
+      "recommendation": "Split responsibilities into smaller services, actions, requests, resources, or policies.",
+      "file": "app/Services/CmsContentService.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "maintainability",
+      "title": "Large PHP file: app/Services/CommerceService.php",
+      "evidence": "355 lines",
+      "recommendation": "Split responsibilities into smaller services, actions, requests, resources, or policies.",
+      "file": "app/Services/CommerceService.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "maintainability",
+      "title": "Large PHP file: app/Services/CommunicationManager.php",
+      "evidence": "337 lines",
+      "recommendation": "Split responsibilities into smaller services, actions, requests, resources, or policies.",
+      "file": "app/Services/CommunicationManager.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "maintainability",
+      "title": "Large PHP file: app/Services/LeadMarketplaceService.php",
+      "evidence": "340 lines",
+      "recommendation": "Split responsibilities into smaller services, actions, requests, resources, or policies.",
+      "file": "app/Services/LeadMarketplaceService.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "maintainability",
+      "title": "Large PHP file: app/Services/MediaManagementService.php",
+      "evidence": "447 lines",
+      "recommendation": "Split responsibilities into smaller services, actions, requests, resources, or policies.",
+      "file": "app/Services/MediaManagementService.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "maintainability",
+      "title": "Large PHP file: app/Services/SubscriptionBillingService.php",
+      "evidence": "445 lines",
+      "recommendation": "Split responsibilities into smaller services, actions, requests, resources, or policies.",
+      "file": "app/Services/SubscriptionBillingService.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "maintainability",
+      "title": "Large PHP file: app/Services/WorkflowAutomationService.php",
+      "evidence": "494 lines",
+      "recommendation": "Split responsibilities into smaller services, actions, requests, resources, or policies.",
+      "file": "app/Services/WorkflowAutomationService.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "migrations",
+      "title": "Migration depends on pre-existing schema",
+      "evidence": "database/migrations/2026_08_02_150000_extend_directory_core_tables.php",
+      "recommendation": "Document the baseline dependency or consolidate migrations into a deterministic installation sequence.",
+      "file": "database/migrations/2026_08_02_150000_extend_directory_core_tables.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "migrations",
+      "title": "Self-referencing foreign key requires review",
+      "evidence": "database/migrations/2026_08_03_020000_create_marketplace_commerce_platform.php",
+      "recommendation": "Verify the referenced column is primary or unique before adding the foreign key.",
+      "file": "database/migrations/2026_08_03_020000_create_marketplace_commerce_platform.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "migrations",
+      "title": "Self-referencing foreign key requires review",
+      "evidence": "database/migrations/2026_08_03_050000_create_cms_content_platform.php",
+      "recommendation": "Verify the referenced column is primary or unique before adding the foreign key.",
+      "file": "database/migrations/2026_08_03_050000_create_cms_content_platform.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "migrations",
+      "title": "Self-referencing foreign key requires review",
+      "evidence": "database/migrations/2026_08_03_060000_create_customer_support_platform.php",
+      "recommendation": "Verify the referenced column is primary or unique before adding the foreign key.",
+      "file": "database/migrations/2026_08_03_060000_create_customer_support_platform.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Model allows unrestricted mass assignment",
+      "evidence": "protected $guarded = []",
+      "recommendation": "Use explicit fillable fields or DTO-based assignment.",
+      "file": "app/Models/Category.php",
+      "line": 19
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Model allows unrestricted mass assignment",
+      "evidence": "protected $guarded = []",
+      "recommendation": "Use explicit fillable fields or DTO-based assignment.",
+      "file": "app/Models/DirectoryService.php",
+      "line": 16
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/AdminCustomerSupportController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/AdminCustomerSupportController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/AdvertisingController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/AdvertisingController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/AnalyticsReportingController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/AnalyticsReportingController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/AuthController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/AuthController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/CmsContentController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/CmsContentController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/CommerceController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/CommerceController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/CustomerSupportController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/CustomerSupportController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/DeveloperPlatformController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/DeveloperPlatformController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/LeadMarketplaceController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/LeadMarketplaceController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/MediaController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/MediaController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/PaymentController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/PaymentController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/PlatformHealthController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/PlatformHealthController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/ReviewController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/ReviewController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/SubscriptionBillingController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/SubscriptionBillingController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Controllers/Api/WorkflowAutomationController.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Controllers/Api/WorkflowAutomationController.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Http/Middleware/AuthenticateApiClient.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Http/Middleware/AuthenticateApiClient.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Services/CommunicationManager.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Services/CommunicationManager.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Services/MediaManagementService.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Services/MediaManagementService.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Services/WebhookService.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Services/WebhookService.php",
+      "line": null
+    },
+    {
+      "severity": "medium",
+      "category": "security",
+      "title": "Raw exception message usage",
+      "evidence": "app/Services/WorkflowAutomationService.php",
+      "recommendation": "Do not expose internal database or filesystem errors to clients. Log internal details with a request ID.",
+      "file": "app/Services/WorkflowAutomationService.php",
+      "line": null
+    }
+  ]
+}

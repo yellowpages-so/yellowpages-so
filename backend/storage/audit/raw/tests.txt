@@ -1,0 +1,86 @@
+
+   PASS  Tests\Unit\ExampleTest
+  ✓ that true is true
+
+   PASS  Tests\Feature\Api\AdminPortalCoreTest
+  ✓ administrator can open dashboard                                     0.17s  
+
+   PASS  Tests\Feature\Api\AdvertisingMonetizationTest
+  ✓ owner can create campaign                                            0.11s  
+
+   PASS  Tests\Feature\Api\AiBusinessIntelligenceTest
+  ✓ owner can generate business description                              0.12s  
+
+   PASS  Tests\Feature\Api\AnalyticsReportingTest
+  ✓ owner can open reporting dashboard                                   0.11s  
+
+   PASS  Tests\Feature\Api\BusinessCrudTest
+  ✓ owner can create list update and archive business                    0.17s  
+
+   PASS  Tests\Feature\Api\BusinessOwnerCapabilitiesTest
+  ✓ owner can view dashboard and add contact                             0.16s  
+
+   PASS  Tests\Feature\Api\CmsContentTest
+  ✓ admin can create page                                                0.13s  
+
+   PASS  Tests\Feature\Api\CustomerSupportTest
+  ✓ user can create support ticket                                       0.10s  
+
+   PASS  Tests\Feature\Api\DeveloperIntegrationTest
+  ✓ user can create api client                                           0.10s  
+
+   PASS  Tests\Feature\Api\DirectoryCoreTest
+  ✓ taxonomy files validate                                              0.05s  
+  ✓ public categories endpoint works                                     0.05s  
+  ✓ public search endpoint works                                         0.07s  
+
+   PASS  Tests\Feature\Api\EnterpriseObservabilityTest
+  ✓ metrics endpoint returns prometheus data                             0.05s  
+
+   PASS  Tests\Feature\Api\EnterpriseStandardsTest
+  ✓ liveness endpoint works                                              0.01s  
+  ✓ request id is returned                                               0.01s  
+
+   PASS  Tests\Feature\Api\LeadsMarketplaceTest
+  ✓ guest can submit quote request                                       0.07s  
+
+   PASS  Tests\Feature\Api\MarketplaceCommerceTest
+  ✓ owner can create product                                             0.09s  
+
+   PASS  Tests\Feature\Api\MediaManagementTest
+  ✓ owner can upload business logo                                       0.11s  
+
+   PASS  Tests\Feature\Api\NotificationsCommunicationTest
+  ✓ in app notification can be created and read                          0.08s  
+
+   PASS  Tests\Feature\Api\PaymentsPlatformTest
+  ✓ user can create manual payment intent                                0.10s  
+
+   PASS  Tests\Feature\Api\ReviewsReputationTest
+  ✓ user can submit review                                               0.15s  
+
+   PASS  Tests\Feature\Api\SecurityComplianceTest
+  ✓ user can start mfa setup                                             0.09s  
+
+   PASS  Tests\Feature\Api\SmartSearchTest
+  ✓ search endpoint returns success with database fallback               0.08s  
+  ✓ suggestions require two characters for results                       0.02s  
+
+   PASS  Tests\Feature\Api\SubscriptionBillingTest
+  ✓ owner can start subscription                                         0.11s  
+
+   PASS  Tests\Feature\Api\VerificationWorkflowTest
+  ✓ business owner can submit verification request and document          0.11s  
+
+   PASS  Tests\Feature\Api\WorkflowAutomationTest
+  ✓ user can create workflow                                             0.09s  
+
+   PASS  Tests\Feature\Console\ImportSomaliaGeographyTest
+  ✓ geography files pass validation                                      0.02s  
+
+   PASS  Tests\Feature\ExampleTest
+  ✓ the application returns a successful response                        0.02s  
+
+  Tests:    30 passed (85 assertions)
+  Duration: 2.65s
+

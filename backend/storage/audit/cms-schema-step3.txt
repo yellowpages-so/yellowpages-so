@@ -1,0 +1,38 @@
+ table_name |   column_name   |        data_type         | is_nullable |  column_default   
+------------+-----------------+--------------------------+-------------+-------------------
+ articles   | id              | uuid                     | NO          | gen_random_uuid()
+ articles   | slug            | USER-DEFINED             | NO          | 
+ articles   | title           | text                     | NO          | 
+ articles   | excerpt         | text                     | YES         | 
+ articles   | body            | jsonb                    | NO          | '{}'::jsonb
+ articles   | status          | text                     | NO          | 'draft'::text
+ articles   | author_user_id  | uuid                     | YES         | 
+ articles   | published_at    | timestamp with time zone | YES         | 
+ articles   | created_at      | timestamp with time zone | NO          | now()
+ articles   | updated_at      | timestamp with time zone | NO          | now()
+ banners    | id              | uuid                     | NO          | gen_random_uuid()
+ banners    | placement_code  | text                     | NO          | 
+ banners    | title           | text                     | YES         | 
+ banners    | image_url       | text                     | YES         | 
+ banners    | destination_url | text                     | YES         | 
+ banners    | starts_at       | timestamp with time zone | YES         | 
+ banners    | ends_at         | timestamp with time zone | YES         | 
+ banners    | active          | boolean                  | NO          | true
+ faqs       | id              | uuid                     | NO          | gen_random_uuid()
+ faqs       | question        | text                     | NO          | 
+ faqs       | answer          | text                     | NO          | 
+ faqs       | sort_order      | integer                  | NO          | 0
+ faqs       | active          | boolean                  | NO          | true
+ pages      | id              | uuid                     | NO          | gen_random_uuid()
+ pages      | slug            | USER-DEFINED             | NO          | 
+ pages      | title           | text                     | NO          | 
+ pages      | body            | jsonb                    | NO          | '{}'::jsonb
+ pages      | status          | text                     | NO          | 'draft'::text
+ pages      | seo_title       | text                     | YES         | 
+ pages      | seo_description | text                     | YES         | 
+ pages      | published_at    | timestamp with time zone | YES         | 
+ pages      | created_by      | uuid                     | YES         | 
+ pages      | created_at      | timestamp with time zone | NO          | now()
+ pages      | updated_at      | timestamp with time zone | NO          | now()
+(34 rows)
+

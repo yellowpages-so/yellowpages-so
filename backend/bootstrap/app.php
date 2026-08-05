@@ -12,6 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->append(
+            \App\Http\Middleware\RequestCorrelationId::class
+        );
+
         $middleware->alias([
             'api.client' => \App\Http\Middleware\AuthenticateApiClient::class,
             'api.usage' => \App\Http\Middleware\RecordApiUsage::class,

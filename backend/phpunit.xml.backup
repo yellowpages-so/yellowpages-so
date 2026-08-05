@@ -28,6 +28,7 @@
         <env name="DB_PORT" value="5433"/>
         <env name="DB_DATABASE" value="yellowpages_test"/>
         <env name="DB_USERNAME" value="yellowpages_user"/>
+        <env name="DB_PASSWORD" value="YellowPagesTest_2026_Strong"/>
       
         <env name="DB_URL" value=""/>
         <env name="MAIL_MAILER" value="array"/>

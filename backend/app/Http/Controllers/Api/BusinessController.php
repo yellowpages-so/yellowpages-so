@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Domain\Directory\DTO\CreateBusinessData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBusinessRequest;
 use App\Http\Requests\UpdateBusinessRequest;
@@ -33,9 +34,11 @@ class BusinessController extends Controller
 
     public function store(StoreBusinessRequest $request): JsonResponse
     {
+        $data = $request->validated();
+
         $business = $this->businessService->create(
             $request->user(),
-            $request->validated()
+            CreateBusinessData::fromArray($data)
         );
 
         return response()->json([

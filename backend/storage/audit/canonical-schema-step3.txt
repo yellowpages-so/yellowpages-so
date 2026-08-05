@@ -1,0 +1,495 @@
+ table_schema |         table_name         |       column_name       |          data_type          | is_nullable 
+--------------+----------------------------+-------------------------+-----------------------------+-------------
+ analytics    | ai_generation_jobs         | id                      | uuid                        | NO
+ analytics    | ai_generation_jobs         | job_type                | character varying           | NO
+ analytics    | ai_generation_jobs         | entity_type             | character varying           | NO
+ analytics    | ai_generation_jobs         | entity_id               | uuid                        | NO
+ analytics    | ai_generation_jobs         | requested_by            | uuid                        | YES
+ analytics    | ai_generation_jobs         | input_payload           | jsonb                       | NO
+ analytics    | ai_generation_jobs         | output_payload          | jsonb                       | YES
+ analytics    | ai_generation_jobs         | status                  | character varying           | NO
+ analytics    | ai_generation_jobs         | error_message           | text                        | YES
+ analytics    | ai_generation_jobs         | attempts                | integer                     | NO
+ analytics    | ai_generation_jobs         | started_at              | timestamp with time zone    | YES
+ analytics    | ai_generation_jobs         | completed_at            | timestamp with time zone    | YES
+ analytics    | ai_generation_jobs         | created_at              | timestamp with time zone    | NO
+ analytics    | ai_generation_jobs         | updated_at              | timestamp with time zone    | NO
+ analytics    | ai_insights                | id                      | uuid                        | NO
+ analytics    | ai_insights                | entity_type             | character varying           | NO
+ analytics    | ai_insights                | entity_id               | uuid                        | NO
+ analytics    | ai_insights                | insight_type            | character varying           | NO
+ analytics    | ai_insights                | summary                 | text                        | YES
+ analytics    | ai_insights                | payload                 | jsonb                       | NO
+ analytics    | ai_insights                | confidence              | numeric                     | YES
+ analytics    | ai_insights                | model_provider          | character varying           | YES
+ analytics    | ai_insights                | model_name              | character varying           | YES
+ analytics    | ai_insights                | status                  | character varying           | NO
+ analytics    | ai_insights                | generated_at            | timestamp with time zone    | NO
+ analytics    | ai_insights                | expires_at              | timestamp with time zone    | YES
+ analytics    | ai_insights                | created_at              | timestamp with time zone    | NO
+ analytics    | ai_insights                | updated_at              | timestamp with time zone    | NO
+ analytics    | business_daily_metrics     | id                      | uuid                        | NO
+ analytics    | business_daily_metrics     | business_id             | uuid                        | NO
+ analytics    | business_daily_metrics     | metric_date             | date                        | NO
+ analytics    | business_daily_metrics     | profile_views           | bigint                      | NO
+ analytics    | business_daily_metrics     | search_impressions      | bigint                      | NO
+ analytics    | business_daily_metrics     | website_clicks          | bigint                      | NO
+ analytics    | business_daily_metrics     | phone_clicks            | bigint                      | NO
+ analytics    | business_daily_metrics     | whatsapp_clicks         | bigint                      | NO
+ analytics    | business_daily_metrics     | direction_clicks        | bigint                      | NO
+ analytics    | business_daily_metrics     | lead_count              | bigint                      | NO
+ analytics    | business_daily_metrics     | created_at              | timestamp with time zone    | NO
+ analytics    | business_daily_metrics     | updated_at              | timestamp with time zone    | NO
+ analytics    | business_events            | id                      | bigint                      | NO
+ analytics    | business_events            | business_id             | uuid                        | NO
+ analytics    | business_events            | user_id                 | uuid                        | YES
+ analytics    | business_events            | event_type              | text                        | NO
+ analytics    | business_events            | occurred_at             | timestamp with time zone    | NO
+ analytics    | business_events            | metadata                | jsonb                       | NO
+ analytics    | business_recommendations   | id                      | uuid                        | NO
+ analytics    | business_recommendations   | business_id             | uuid                        | NO
+ analytics    | business_recommendations   | recommended_business_id | uuid                        | NO
+ analytics    | business_recommendations   | score                   | numeric                     | NO
+ analytics    | business_recommendations   | reasons                 | jsonb                       | NO
+ analytics    | business_recommendations   | generated_at            | timestamp with time zone    | NO
+ analytics    | business_recommendations   | expires_at              | timestamp with time zone    | YES
+ analytics    | daily_business_metrics     | business_id             | uuid                        | NO
+ analytics    | daily_business_metrics     | metric_date             | date                        | NO
+ analytics    | daily_business_metrics     | impressions             | integer                     | NO
+ analytics    | daily_business_metrics     | profile_views           | integer                     | NO
+ analytics    | daily_business_metrics     | phone_clicks            | integer                     | NO
+ analytics    | daily_business_metrics     | whatsapp_clicks         | integer                     | NO
+ analytics    | daily_business_metrics     | website_clicks          | integer                     | NO
+ analytics    | daily_business_metrics     | direction_clicks        | integer                     | NO
+ analytics    | daily_business_metrics     | quote_requests          | integer                     | NO
+ analytics    | lead_scores                | quote_request_id        | uuid                        | NO
+ analytics    | lead_scores                | score                   | smallint                    | NO
+ analytics    | lead_scores                | grade                   | character varying           | NO
+ analytics    | lead_scores                | factors                 | jsonb                       | NO
+ analytics    | lead_scores                | model_provider          | character varying           | YES
+ analytics    | lead_scores                | model_name              | character varying           | YES
+ analytics    | lead_scores                | updated_at              | timestamp with time zone    | NO
+ analytics    | search_events              | id                      | bigint                      | NO
+ analytics    | search_events              | user_id                 | uuid                        | YES
+ analytics    | search_events              | query                   | text                        | YES
+ analytics    | search_events              | city_id                 | uuid                        | YES
+ analytics    | search_events              | category_id             | uuid                        | YES
+ analytics    | search_events              | result_count            | integer                     | YES
+ analytics    | search_events              | occurred_at             | timestamp with time zone    | NO
+ analytics    | search_events              | metadata                | jsonb                       | NO
+ billing      | advertising_invoices       | id                      | uuid                        | NO
+ billing      | advertising_invoices       | business_id             | uuid                        | NO
+ billing      | advertising_invoices       | campaign_id             | uuid                        | YES
+ billing      | advertising_invoices       | invoice_no              | character varying           | NO
+ billing      | advertising_invoices       | status                  | character varying           | NO
+ billing      | advertising_invoices       | currency                | character varying           | NO
+ billing      | advertising_invoices       | subtotal                | numeric                     | NO
+ billing      | advertising_invoices       | tax_amount              | numeric                     | NO
+ billing      | advertising_invoices       | discount_amount         | numeric                     | NO
+ billing      | advertising_invoices       | total_amount            | numeric                     | NO
+ billing      | advertising_invoices       | issued_on               | date                        | YES
+ billing      | advertising_invoices       | due_on                  | date                        | YES
+ billing      | advertising_invoices       | paid_at                 | timestamp with time zone    | YES
+ billing      | advertising_invoices       | metadata                | jsonb                       | NO
+ billing      | advertising_invoices       | created_at              | timestamp with time zone    | NO
+ billing      | advertising_invoices       | updated_at              | timestamp with time zone    | NO
+ billing      | invoice_items              | id                      | uuid                        | NO
+ billing      | invoice_items              | invoice_id              | uuid                        | NO
+ billing      | invoice_items              | description             | text                        | NO
+ billing      | invoice_items              | quantity                | numeric                     | NO
+ billing      | invoice_items              | unit_price              | numeric                     | NO
+ billing      | invoice_items              | line_total              | numeric                     | NO
+ billing      | invoices                   | id                      | uuid                        | NO
+ billing      | invoices                   | invoice_no              | text                        | NO
+ billing      | invoices                   | business_id             | uuid                        | NO
+ billing      | invoices                   | subscription_id         | uuid                        | YES
+ billing      | invoices                   | status                  | text                        | NO
+ billing      | invoices                   | currency                | character                   | NO
+ billing      | invoices                   | subtotal                | numeric                     | NO
+ billing      | invoices                   | tax_total               | numeric                     | NO
+ billing      | invoices                   | total                   | numeric                     | NO
+ billing      | invoices                   | amount_paid             | numeric                     | NO
+ billing      | invoices                   | issued_at               | timestamp with time zone    | YES
+ billing      | invoices                   | due_at                  | timestamp with time zone    | YES
+ billing      | invoices                   | created_at              | timestamp with time zone    | NO
+ billing      | payment_providers          | id                      | uuid                        | NO
+ billing      | payment_providers          | code                    | text                        | NO
+ billing      | payment_providers          | name                    | text                        | NO
+ billing      | payment_providers          | active                  | boolean                     | NO
+ billing      | payment_providers          | configuration           | jsonb                       | NO
+ billing      | payments                   | id                      | uuid                        | NO
+ billing      | payments                   | invoice_id              | uuid                        | YES
+ billing      | payments                   | provider_id             | uuid                        | NO
+ billing      | payments                   | provider_reference      | text                        | YES
+ billing      | payments                   | status                  | text                        | NO
+ billing      | payments                   | amount                  | numeric                     | NO
+ billing      | payments                   | currency                | character                   | NO
+ billing      | payments                   | paid_at                 | timestamp with time zone    | YES
+ billing      | payments                   | created_at              | timestamp with time zone    | NO
+ billing      | plan_feature_values        | plan_id                 | uuid                        | NO
+ billing      | plan_feature_values        | feature_id              | uuid                        | NO
+ billing      | plan_feature_values        | value_text              | text                        | YES
+ billing      | plan_features              | id                      | uuid                        | NO
+ billing      | plan_features              | code                    | text                        | NO
+ billing      | plan_features              | name                    | text                        | NO
+ billing      | plan_features              | value_type              | text                        | NO
+ billing      | plans                      | id                      | uuid                        | NO
+ billing      | plans                      | code                    | text                        | NO
+ billing      | plans                      | name                    | text                        | NO
+ billing      | plans                      | billing_interval        | text                        | NO
+ billing      | plans                      | price                   | numeric                     | NO
+ billing      | plans                      | currency                | character                   | NO
+ billing      | plans                      | active                  | boolean                     | NO
+ billing      | plans                      | created_at              | timestamp with time zone    | NO
+ billing      | refunds                    | id                      | uuid                        | NO
+ billing      | refunds                    | payment_id              | uuid                        | NO
+ billing      | refunds                    | amount                  | numeric                     | NO
+ billing      | refunds                    | reason                  | text                        | YES
+ billing      | refunds                    | status                  | text                        | NO
+ billing      | refunds                    | provider_reference      | text                        | YES
+ billing      | refunds                    | created_at              | timestamp with time zone    | NO
+ billing      | subscription_history       | id                      | bigint                      | NO
+ billing      | subscription_history       | subscription_id         | uuid                        | NO
+ billing      | subscription_history       | event_type              | text                        | NO
+ billing      | subscription_history       | old_plan_id             | uuid                        | YES
+ billing      | subscription_history       | new_plan_id             | uuid                        | YES
+ billing      | subscription_history       | metadata                | jsonb                       | NO
+ billing      | subscription_history       | created_at              | timestamp with time zone    | NO
+ billing      | subscriptions              | id                      | uuid                        | NO
+ billing      | subscriptions              | business_id             | uuid                        | NO
+ billing      | subscriptions              | plan_id                 | uuid                        | NO
+ billing      | subscriptions              | status                  | text                        | NO
+ billing      | subscriptions              | starts_at               | timestamp with time zone    | NO
+ billing      | subscriptions              | ends_at                 | timestamp with time zone    | YES
+ billing      | subscriptions              | auto_renew              | boolean                     | NO
+ billing      | subscriptions              | cancelled_at            | timestamp with time zone    | YES
+ billing      | subscriptions              | created_at              | timestamp with time zone    | NO
+ cms          | articles                   | id                      | uuid                        | NO
+ cms          | articles                   | slug                    | USER-DEFINED                | NO
+ cms          | articles                   | title                   | text                        | NO
+ cms          | articles                   | excerpt                 | text                        | YES
+ cms          | articles                   | body                    | jsonb                       | NO
+ cms          | articles                   | status                  | text                        | NO
+ cms          | articles                   | author_user_id          | uuid                        | YES
+ cms          | articles                   | published_at            | timestamp with time zone    | YES
+ cms          | articles                   | created_at              | timestamp with time zone    | NO
+ cms          | articles                   | updated_at              | timestamp with time zone    | NO
+ cms          | banners                    | id                      | uuid                        | NO
+ cms          | banners                    | placement_code          | text                        | NO
+ cms          | banners                    | title                   | text                        | YES
+ cms          | banners                    | image_url               | text                        | YES
+ cms          | banners                    | destination_url         | text                        | YES
+ cms          | banners                    | starts_at               | timestamp with time zone    | YES
+ cms          | banners                    | ends_at                 | timestamp with time zone    | YES
+ cms          | banners                    | active                  | boolean                     | NO
+ cms          | faqs                       | id                      | uuid                        | NO
+ cms          | faqs                       | question                | text                        | NO
+ cms          | faqs                       | answer                  | text                        | NO
+ cms          | faqs                       | sort_order              | integer                     | NO
+ cms          | faqs                       | active                  | boolean                     | NO
+ cms          | pages                      | id                      | uuid                        | NO
+ cms          | pages                      | slug                    | USER-DEFINED                | NO
+ cms          | pages                      | title                   | text                        | NO
+ cms          | pages                      | body                    | jsonb                       | NO
+ cms          | pages                      | status                  | text                        | NO
+ cms          | pages                      | seo_title               | text                        | YES
+ cms          | pages                      | seo_description         | text                        | YES
+ cms          | pages                      | published_at            | timestamp with time zone    | YES
+ cms          | pages                      | created_by              | uuid                        | YES
+ cms          | pages                      | created_at              | timestamp with time zone    | NO
+ cms          | pages                      | updated_at              | timestamp with time zone    | NO
+ directory    | addresses                  | id                      | uuid                        | NO
+ directory    | addresses                  | country_id              | uuid                        | YES
+ directory    | addresses                  | administrative_area_id  | uuid                        | YES
+ directory    | addresses                  | city_id                 | uuid                        | YES
+ directory    | addresses                  | district_id             | uuid                        | YES
+ directory    | addresses                  | neighbourhood_id        | uuid                        | YES
+ directory    | addresses                  | address_line1           | text                        | YES
+ directory    | addresses                  | address_line2           | text                        | YES
+ directory    | addresses                  | landmark                | text                        | YES
+ directory    | addresses                  | postal_code             | text                        | YES
+ directory    | addresses                  | location                | USER-DEFINED                | YES
+ directory    | addresses                  | created_at              | timestamp with time zone    | NO
+ directory    | administrative_areas       | id                      | uuid                        | NO
+ directory    | administrative_areas       | country_id              | uuid                        | NO
+ directory    | administrative_areas       | parent_id               | uuid                        | YES
+ directory    | administrative_areas       | area_type               | text                        | NO
+ directory    | administrative_areas       | name                    | text                        | NO
+ directory    | administrative_areas       | slug                    | USER-DEFINED                | NO
+ directory    | administrative_areas       | active                  | boolean                     | NO
+ directory    | administrative_areas       | code                    | character varying           | YES
+ directory    | administrative_areas       | name_so                 | character varying           | YES
+ directory    | administrative_areas       | latitude                | numeric                     | YES
+ directory    | administrative_areas       | longitude               | numeric                     | YES
+ directory    | administrative_areas       | source                  | character varying           | YES
+ directory    | administrative_areas       | source_version          | character varying           | YES
+ directory    | administrative_areas       | verification_status     | character varying           | NO
+ directory    | business_branches          | id                      | uuid                        | NO
+ directory    | business_branches          | business_id             | uuid                        | NO
+ directory    | business_branches          | name                    | text                        | NO
+ directory    | business_branches          | slug                    | USER-DEFINED                | NO
+ directory    | business_branches          | address_id              | uuid                        | YES
+ directory    | business_branches          | phone                   | text                        | YES
+ directory    | business_branches          | email                   | USER-DEFINED                | YES
+ directory    | business_branches          | manager_user_id         | uuid                        | YES
+ directory    | business_branches          | is_head_office          | boolean                     | NO
+ directory    | business_branches          | status                  | text                        | NO
+ directory    | business_branches          | created_at              | timestamp with time zone    | NO
+ directory    | business_branches          | updated_at              | timestamp with time zone    | NO
+ directory    | business_categories        | business_id             | uuid                        | NO
+ directory    | business_categories        | category_id             | uuid                        | NO
+ directory    | business_categories        | is_primary              | boolean                     | NO
+ directory    | business_categories        | created_at              | timestamp with time zone    | NO
+ directory    | business_claims            | id                      | uuid                        | NO
+ directory    | business_claims            | business_id             | uuid                        | NO
+ directory    | business_claims            | claimant_user_id        | uuid                        | NO
+ directory    | business_claims            | status                  | text                        | NO
+ directory    | business_claims            | evidence_summary        | text                        | YES
+ directory    | business_claims            | reviewed_by             | uuid                        | YES
+ directory    | business_claims            | reviewed_at             | timestamp with time zone    | YES
+ directory    | business_claims            | created_at              | timestamp with time zone    | NO
+ directory    | business_claims            | claim_type              | character varying           | NO
+ directory    | business_claims            | claim_reason            | text                        | YES
+ directory    | business_claims            | contact_email           | character varying           | YES
+ directory    | business_claims            | contact_phone           | character varying           | YES
+ directory    | business_claims            | assigned_to             | uuid                        | YES
+ directory    | business_claims            | submitted_at            | timestamp with time zone    | YES
+ directory    | business_claims            | decided_at              | timestamp with time zone    | YES
+ directory    | business_contacts          | id                      | uuid                        | NO
+ directory    | business_contacts          | business_id             | uuid                        | NO
+ directory    | business_contacts          | branch_id               | uuid                        | YES
+ directory    | business_contacts          | contact_type            | text                        | NO
+ directory    | business_contacts          | label                   | text                        | YES
+ directory    | business_contacts          | value                   | text                        | NO
+ directory    | business_contacts          | is_primary              | boolean                     | NO
+ directory    | business_contacts          | is_public               | boolean                     | NO
+ directory    | business_contacts          | verified_at             | timestamp with time zone    | YES
+ directory    | business_contacts          | created_at              | timestamp with time zone    | NO
+ directory    | business_keywords          | business_id             | uuid                        | NO
+ directory    | business_keywords          | keyword                 | USER-DEFINED                | NO
+ directory    | business_media             | id                      | uuid                        | NO
+ directory    | business_media             | business_id             | uuid                        | NO
+ directory    | business_media             | branch_id               | uuid                        | YES
+ directory    | business_media             | media_type              | text                        | NO
+ directory    | business_media             | storage_key             | text                        | NO
+ directory    | business_media             | caption                 | text                        | YES
+ directory    | business_media             | alt_text                | text                        | YES
+ directory    | business_media             | sort_order              | integer                     | NO
+ directory    | business_media             | status                  | text                        | NO
+ directory    | business_media             | created_at              | timestamp with time zone    | NO
+ directory    | business_members           | id                      | uuid                        | NO
+ directory    | business_members           | business_id             | uuid                        | NO
+ directory    | business_members           | user_id                 | uuid                        | NO
+ directory    | business_members           | role_code               | text                        | NO
+ directory    | business_members           | status                  | text                        | NO
+ directory    | business_members           | invited_by              | uuid                        | YES
+ directory    | business_members           | joined_at               | timestamp with time zone    | YES
+ directory    | business_members           | created_at              | timestamp with time zone    | NO
+ directory    | business_opening_hours     | id                      | uuid                        | NO
+ directory    | business_opening_hours     | branch_id               | uuid                        | NO
+ directory    | business_opening_hours     | weekday                 | smallint                    | NO
+ directory    | business_opening_hours     | opens_at                | time without time zone      | YES
+ directory    | business_opening_hours     | closes_at               | time without time zone      | YES
+ directory    | business_opening_hours     | is_closed               | boolean                     | NO
+ directory    | business_profile_progress  | business_id             | uuid                        | NO
+ directory    | business_profile_progress  | details_score           | smallint                    | NO
+ directory    | business_profile_progress  | contacts_score          | smallint                    | NO
+ directory    | business_profile_progress  | location_score          | smallint                    | NO
+ directory    | business_profile_progress  | services_score          | smallint                    | NO
+ directory    | business_profile_progress  | hours_score             | smallint                    | NO
+ directory    | business_profile_progress  | media_score             | smallint                    | NO
+ directory    | business_profile_progress  | verification_score      | smallint                    | NO
+ directory    | business_profile_progress  | total_score             | smallint                    | NO
+ directory    | business_profile_progress  | missing_items           | jsonb                       | NO
+ directory    | business_profile_progress  | updated_at              | timestamp with time zone    | NO
+ directory    | business_service_areas     | id                      | uuid                        | NO
+ directory    | business_service_areas     | business_id             | uuid                        | NO
+ directory    | business_service_areas     | city_id                 | uuid                        | YES
+ directory    | business_service_areas     | district_id             | uuid                        | YES
+ directory    | business_service_areas     | radius_km               | numeric                     | YES
+ directory    | business_service_areas     | created_at              | timestamp with time zone    | NO
+ directory    | business_services          | id                      | uuid                        | NO
+ directory    | business_services          | business_id             | uuid                        | NO
+ directory    | business_services          | service_id              | uuid                        | YES
+ directory    | business_services          | custom_name             | text                        | YES
+ directory    | business_services          | description             | text                        | YES
+ directory    | business_services          | price_from              | numeric                     | YES
+ directory    | business_services          | currency                | character                   | YES
+ directory    | business_services          | active                  | boolean                     | NO
+ directory    | business_services          | created_at              | timestamp with time zone    | NO
+ directory    | business_services          | updated_at              | timestamp with time zone    | NO
+ directory    | business_social_links      | id                      | uuid                        | NO
+ directory    | business_social_links      | business_id             | uuid                        | NO
+ directory    | business_social_links      | platform                | text                        | NO
+ directory    | business_social_links      | url                     | text                        | NO
+ directory    | business_social_links      | created_at              | timestamp with time zone    | NO
+ directory    | business_special_hours     | id                      | uuid                        | NO
+ directory    | business_special_hours     | branch_id               | uuid                        | NO
+ directory    | business_special_hours     | service_date            | date                        | NO
+ directory    | business_special_hours     | opens_at                | time without time zone      | YES
+ directory    | business_special_hours     | closes_at               | time without time zone      | YES
+ directory    | business_special_hours     | is_closed               | boolean                     | NO
+ directory    | business_special_hours     | note                    | text                        | YES
+ directory    | businesses                 | id                      | uuid                        | NO
+ directory    | businesses                 | public_id               | text                        | NO
+ directory    | businesses                 | legal_name              | text                        | NO
+ directory    | businesses                 | trading_name            | text                        | NO
+ directory    | businesses                 | slug                    | USER-DEFINED                | NO
+ directory    | businesses                 | description             | text                        | YES
+ directory    | businesses                 | short_description       | text                        | YES
+ directory    | businesses                 | registration_number     | text                        | YES
+ directory    | businesses                 | tax_number              | text                        | YES
+ directory    | businesses                 | established_year        | smallint                    | YES
+ directory    | businesses                 | status                  | text                        | NO
+ directory    | businesses                 | verification_level_id   | smallint                    | YES
+ directory    | businesses                 | primary_city_id         | uuid                        | YES
+ directory    | businesses                 | primary_address_id      | uuid                        | YES
+ directory    | businesses                 | logo_url                | text                        | YES
+ directory    | businesses                 | cover_url               | text                        | YES
+ directory    | businesses                 | website_url             | text                        | YES
+ directory    | businesses                 | profile_completeness    | smallint                    | NO
+ directory    | businesses                 | average_rating          | numeric                     | NO
+ directory    | businesses                 | review_count            | integer                     | NO
+ directory    | businesses                 | published_at            | timestamp with time zone    | YES
+ directory    | businesses                 | created_by              | uuid                        | YES
+ directory    | businesses                 | created_at              | timestamp with time zone    | NO
+ directory    | businesses                 | updated_at              | timestamp with time zone    | NO
+ directory    | businesses                 | deleted_at              | timestamp with time zone    | YES
+ directory    | businesses                 | search_document         | tsvector                    | YES
+ directory    | categories                 | id                      | uuid                        | NO
+ directory    | categories                 | parent_id               | uuid                        | YES
+ directory    | categories                 | name                    | text                        | NO
+ directory    | categories                 | slug                    | USER-DEFINED                | NO
+ directory    | categories                 | description             | text                        | YES
+ directory    | categories                 | icon                    | text                        | YES
+ directory    | categories                 | active                  | boolean                     | NO
+ directory    | categories                 | sort_order              | integer                     | NO
+ directory    | categories                 | created_at              | timestamp with time zone    | NO
+ directory    | categories                 | name_so                 | character varying           | YES
+ directory    | categories                 | seo_title               | character varying           | YES
+ directory    | categories                 | seo_description         | text                        | YES
+ directory    | categories                 | featured                | boolean                     | NO
+ directory    | categories                 | search_keywords         | jsonb                       | NO
+ directory    | category_closure           | ancestor_id             | uuid                        | NO
+ directory    | category_closure           | descendant_id           | uuid                        | NO
+ directory    | category_closure           | depth                   | integer                     | NO
+ directory    | cities                     | id                      | uuid                        | NO
+ directory    | cities                     | administrative_area_id  | uuid                        | YES
+ directory    | cities                     | name                    | text                        | NO
+ directory    | cities                     | slug                    | USER-DEFINED                | NO
+ directory    | cities                     | location                | USER-DEFINED                | YES
+ directory    | cities                     | active                  | boolean                     | NO
+ directory    | cities                     | code                    | character varying           | YES
+ directory    | cities                     | name_so                 | character varying           | YES
+ directory    | cities                     | is_capital              | boolean                     | NO
+ directory    | cities                     | source                  | character varying           | YES
+ directory    | cities                     | source_version          | character varying           | YES
+ directory    | cities                     | verification_status     | character varying           | NO
+ directory    | countries                  | id                      | uuid                        | NO
+ directory    | countries                  | iso2                    | character                   | NO
+ directory    | countries                  | iso3                    | character                   | NO
+ directory    | countries                  | name                    | text                        | NO
+ directory    | countries                  | active                  | boolean                     | NO
+ directory    | districts                  | id                      | uuid                        | NO
+ directory    | districts                  | city_id                 | uuid                        | YES
+ directory    | districts                  | name                    | text                        | NO
+ directory    | districts                  | slug                    | USER-DEFINED                | NO
+ directory    | districts                  | active                  | boolean                     | NO
+ directory    | districts                  | code                    | character varying           | YES
+ directory    | districts                  | administrative_area_id  | uuid                        | YES
+ directory    | districts                  | name_so                 | character varying           | YES
+ directory    | districts                  | latitude                | numeric                     | YES
+ directory    | districts                  | longitude               | numeric                     | YES
+ directory    | districts                  | source                  | character varying           | YES
+ directory    | districts                  | source_version          | character varying           | YES
+ directory    | districts                  | verification_status     | character varying           | NO
+ directory    | location_aliases           | id                      | uuid                        | NO
+ directory    | location_aliases           | location_type           | character varying           | NO
+ directory    | location_aliases           | location_id             | uuid                        | NO
+ directory    | location_aliases           | alias                   | character varying           | NO
+ directory    | location_aliases           | language                | character varying           | YES
+ directory    | location_aliases           | created_at              | timestamp without time zone | YES
+ directory    | location_aliases           | updated_at              | timestamp without time zone | YES
+ directory    | neighbourhoods             | id                      | uuid                        | NO
+ directory    | neighbourhoods             | district_id             | uuid                        | NO
+ directory    | neighbourhoods             | name                    | text                        | NO
+ directory    | neighbourhoods             | slug                    | USER-DEFINED                | NO
+ directory    | neighbourhoods             | active                  | boolean                     | NO
+ directory    | neighbourhoods             | code                    | character varying           | YES
+ directory    | neighbourhoods             | name_so                 | character varying           | YES
+ directory    | neighbourhoods             | latitude                | numeric                     | YES
+ directory    | neighbourhoods             | longitude               | numeric                     | YES
+ directory    | neighbourhoods             | location_type           | character varying           | NO
+ directory    | neighbourhoods             | source                  | character varying           | YES
+ directory    | neighbourhoods             | source_version          | character varying           | YES
+ directory    | neighbourhoods             | verification_status     | character varying           | NO
+ directory    | services                   | id                      | uuid                        | NO
+ directory    | services                   | category_id             | uuid                        | YES
+ directory    | services                   | name                    | text                        | NO
+ directory    | services                   | slug                    | USER-DEFINED                | NO
+ directory    | services                   | description             | text                        | YES
+ directory    | services                   | active                  | boolean                     | NO
+ directory    | services                   | name_so                 | character varying           | YES
+ directory    | services                   | search_keywords         | jsonb                       | NO
+ directory    | services                   | created_at              | timestamp without time zone | YES
+ directory    | services                   | updated_at              | timestamp without time zone | YES
+ reviews      | business_reputation_scores | business_id             | uuid                        | NO
+ reviews      | business_reputation_scores | score                   | numeric                     | NO
+ reviews      | business_reputation_scores | average_rating          | numeric                     | NO
+ reviews      | business_reputation_scores | review_count            | integer                     | NO
+ reviews      | business_reputation_scores | verified_review_count   | integer                     | NO
+ reviews      | business_reputation_scores | helpful_vote_count      | integer                     | NO
+ reviews      | business_reputation_scores | updated_at              | timestamp with time zone    | NO
+ reviews      | review_helpful_votes       | id                      | uuid                        | NO
+ reviews      | review_helpful_votes       | review_id               | uuid                        | NO
+ reviews      | review_helpful_votes       | user_id                 | uuid                        | NO
+ reviews      | review_helpful_votes       | helpful                 | boolean                     | NO
+ reviews      | review_helpful_votes       | created_at              | timestamp with time zone    | NO
+ reviews      | review_moderation_events   | id                      | uuid                        | NO
+ reviews      | review_moderation_events   | review_id               | uuid                        | NO
+ reviews      | review_moderation_events   | actor_user_id           | uuid                        | YES
+ reviews      | review_moderation_events   | action                  | character varying           | NO
+ reviews      | review_moderation_events   | reason_code             | character varying           | YES
+ reviews      | review_moderation_events   | notes                   | text                        | YES
+ reviews      | review_moderation_events   | metadata                | jsonb                       | NO
+ reviews      | review_moderation_events   | created_at              | timestamp with time zone    | NO
+ reviews      | review_replies             | id                      | uuid                        | NO
+ reviews      | review_replies             | review_id               | uuid                        | NO
+ reviews      | review_replies             | business_id             | uuid                        | NO
+ reviews      | review_replies             | user_id                 | uuid                        | NO
+ reviews      | review_replies             | reply                   | text                        | NO
+ reviews      | review_replies             | created_at              | timestamp with time zone    | NO
+ reviews      | review_replies             | updated_at              | timestamp with time zone    | NO
+ reviews      | review_reports             | id                      | uuid                        | NO
+ reviews      | review_reports             | review_id               | uuid                        | NO
+ reviews      | review_reports             | reported_by             | uuid                        | NO
+ reviews      | review_reports             | reason                  | text                        | NO
+ reviews      | review_reports             | status                  | text                        | NO
+ reviews      | review_reports             | created_at              | timestamp with time zone    | NO
+ reviews      | review_responses           | id                      | uuid                        | NO
+ reviews      | review_responses           | review_id               | uuid                        | NO
+ reviews      | review_responses           | business_id             | uuid                        | NO
+ reviews      | review_responses           | author_user_id          | uuid                        | NO
+ reviews      | review_responses           | body                    | text                        | NO
+ reviews      | review_responses           | status                  | text                        | NO
+ reviews      | review_responses           | created_at              | timestamp with time zone    | NO
+ reviews      | review_responses           | updated_at              | timestamp with time zone    | NO
+ reviews      | review_votes               | review_id               | uuid                        | NO
+ reviews      | review_votes               | user_id                 | uuid                        | NO
+ reviews      | review_votes               | vote                    | text                        | NO
+ reviews      | review_votes               | created_at              | timestamp with time zone    | NO
+ reviews      | reviews                    | id                      | uuid                        | NO
+ reviews      | reviews                    | business_id             | uuid                        | NO
+ reviews      | reviews                    | user_id                 | uuid                        | NO
+ reviews      | reviews                    | rating                  | smallint                    | NO
+ reviews      | reviews                    | title                   | text                        | YES
+ reviews      | reviews                    | body                    | text                        | YES
+ reviews      | reviews                    | status                  | text                        | NO
+ reviews      | reviews                    | verified_customer       | boolean                     | NO
+ reviews      | reviews                    | published_at            | timestamp with time zone    | YES
+ reviews      | reviews                    | created_at              | timestamp with time zone    | NO
+ reviews      | reviews                    | updated_at              | timestamp with time zone    | NO
+ reviews      | reviews                    | helpful_count           | integer                     | NO
+ reviews      | reviews                    | moderation_score        | smallint                    | NO
+(491 rows)
+

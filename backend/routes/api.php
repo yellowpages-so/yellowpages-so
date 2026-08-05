@@ -52,3 +52,7 @@ require __DIR__.'/analytics_reporting.php';
 require __DIR__.'/cms_content.php';
 require __DIR__.'/customer_support.php';
 require __DIR__.'/workflow_automation.php';
+
+require __DIR__.'/enterprise_standards.php';
+
+require __DIR__.'/enterprise_observability.php';

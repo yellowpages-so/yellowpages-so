@@ -61,11 +61,6 @@ return new class extends Migration
                 ->on('automation.workflows')
                 ->cascadeOnDelete();
 
-            $table->foreign('parent_step_id')
-                ->references('id')
-                ->on('automation.workflow_steps')
-                ->nullOnDelete();
-
             $table->index(['workflow_id', 'sort_order']);
         });
 

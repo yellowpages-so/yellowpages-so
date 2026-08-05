@@ -1,0 +1,19 @@
+openapi: 3.1.0
+info:
+  title: YellowPages.so API
+  version: 1.0.0
+paths:
+  /v1/platform/live:
+    get:
+      summary: Liveness probe
+      responses:
+        "200":
+          description: Healthy
+  /v1/platform/ready:
+    get:
+      summary: Readiness probe
+      responses:
+        "200":
+          description: Ready
+        "503":
+          description: Degraded

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Domain\Directory\DTO\CreateBusinessData;
 use App\Models\Business;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -9,30 +10,42 @@ use Illuminate\Support\Str;
 
 class BusinessService
 {
-    public function create(User $owner, array $data): Business
-    {
-        return DB::transaction(function () use ($owner, $data): Business {
-            $business = Business::query()->create([
-                ...$data,
-                'public_id' => (string) Str::ulid(),
-                'slug' => $this->uniqueSlug($data['trading_name']),
-                'status' => 'draft',
-                'profile_completeness' => $this->calculateCompleteness($data),
-                'created_by' => $owner->id,
-            ]);
+    public function create(
+        User $owner,
+        CreateBusinessData $data
+    ): Business {
+        return DB::transaction(
+            function () use ($owner, $data): Business {
+                $attributes = $data->toArray();
 
-            DB::table('directory.business_members')->insert([
-                'id' => (string) Str::uuid(),
-                'business_id' => $business->id,
-                'user_id' => $owner->id,
-                'role_code' => 'owner',
-                'status' => 'active',
-                'joined_at' => now(),
-                'created_at' => now(),
-            ]);
+                $business = Business::query()->create([
+                    ...$attributes,
+                    'public_id' => (string) Str::ulid(),
+                    'slug' => $this->uniqueSlug(
+                        $data->tradingName
+                    ),
+                    'status' => 'draft',
+                    'profile_completeness' => $this->calculateCompleteness(
+                        $attributes
+                    ),
+                    'created_by' => $owner->id,
+                ]);
 
-            return $business->fresh();
-        });
+                DB::table(
+                    'directory.business_members'
+                )->insert([
+                    'id' => (string) Str::uuid(),
+                    'business_id' => $business->id,
+                    'user_id' => $owner->id,
+                    'role_code' => 'owner',
+                    'status' => 'active',
+                    'joined_at' => now(),
+                    'created_at' => now(),
+                ]);
+
+                return $business->fresh();
+            }
+        );
     }
 
     public function update(Business $business, array $data): Business

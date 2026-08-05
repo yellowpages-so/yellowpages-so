@@ -1,0 +1,47 @@
+app/Http/Controllers/Api/SmartSearchController.php:76:            ->selectRaw('lower(query) as query, count(*) as searches')
+app/Http/Controllers/Api/AuthController.php:38:            ->whereRaw('LOWER(email::text) = ?', [$email])
+app/Http/Controllers/Api/AuthController.php:114:            ->whereRaw('LOWER(emails.email::text) = ?', [$email])
+app/Http/Controllers/Api/DeveloperPlatformController.php:128:                    ->selectRaw('route, count(*) as requests')
+app/Http/Controllers/Api/AdminCustomerSupportController.php:61:                ->orderByRaw("
+app/Services/AiBusinessIntelligenceService.php:25:            ->selectRaw('COALESCE(services.name, bs.custom_name) as name')
+app/Services/AiBusinessIntelligenceService.php:179:                $query->selectRaw('1')
+app/Services/LeadMarketplaceService.php:277:                            ->selectRaw('1')
+app/Services/SubscriptionBillingService.php:192:                ->selectRaw(
+app/Services/DirectorySearchService.php:15:            $q->where(fn ($x) => $x->whereRaw("b.search_document @@ plainto_tsquery('simple', ?)", [$t])->orWhere('b.trading_name', 'ilike', "%$t%")->orWhere('b.legal_name', 'ilike', "%$t%"));
+app/Services/DirectorySearchService.php:23:            $q->whereExists(fn ($s) => $s->selectRaw('1')->from('directory.business_categories as bc')->join('directory.categories as cat', 'cat.id', '=', 'bc.category_id')->whereColumn('bc.business_id', 'b.id')->where('cat.slug', $f['category']));
+app/Services/AdvertisingService.php:128:                $builder->whereRaw(
+app/Services/AdvertisingService.php:139:                $builder->whereRaw(
+app/Services/AnalyticsReportingService.php:46:            ->selectRaw('
+database/migrations/2026_08_03_040000_create_analytics_reporting_platform.php:12:        DB::statement('CREATE SCHEMA IF NOT EXISTS reporting');
+database/migrations/2026_08_02_150000_extend_directory_core_tables.php:24:        DB::statement('ALTER TABLE directory.businesses ADD COLUMN IF NOT EXISTS search_document tsvector');
+database/migrations/2026_08_02_150000_extend_directory_core_tables.php:25:        DB::statement('CREATE INDEX IF NOT EXISTS businesses_search_document_gin ON directory.businesses USING gin (search_document)');
+database/migrations/2026_08_02_150000_extend_directory_core_tables.php:26:        DB::statement("CREATE OR REPLACE FUNCTION directory.refresh_business_search_document() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN NEW.search_document := setweight(to_tsvector('simple', coalesce(NEW.trading_name,'')), 'A') || setweight(to_tsvector('simple', coalesce(NEW.legal_name,'')), 'A') || setweight(to_tsvector('simple', coalesce(NEW.short_description,'')), 'B') || setweight(to_tsvector('simple', coalesce(NEW.description,'')), 'C'); RETURN NEW; END; $$");
+database/migrations/2026_08_02_150000_extend_directory_core_tables.php:27:        DB::statement('DROP TRIGGER IF EXISTS trg_business_search_document ON directory.businesses');
+database/migrations/2026_08_02_150000_extend_directory_core_tables.php:28:        DB::statement('CREATE TRIGGER trg_business_search_document BEFORE INSERT OR UPDATE OF trading_name,legal_name,short_description,description ON directory.businesses FOR EACH ROW EXECUTE FUNCTION directory.refresh_business_search_document()');
+database/migrations/2026_08_02_150000_extend_directory_core_tables.php:29:        DB::statement('UPDATE directory.businesses SET trading_name=trading_name');
+database/migrations/2026_08_02_150000_extend_directory_core_tables.php:34:        DB::statement('DROP TRIGGER IF EXISTS trg_business_search_document ON directory.businesses');
+database/migrations/2026_08_02_150000_extend_directory_core_tables.php:35:        DB::statement('DROP FUNCTION IF EXISTS directory.refresh_business_search_document()');
+database/migrations/2026_08_02_150000_extend_directory_core_tables.php:36:        DB::statement('DROP INDEX IF EXISTS directory.businesses_search_document_gin');
+database/migrations/2026_08_02_150000_extend_directory_core_tables.php:37:        DB::statement('ALTER TABLE directory.businesses DROP COLUMN IF EXISTS search_document');
+database/migrations/2026_08_03_060000_create_customer_support_platform.php:13:        DB::statement('CREATE SCHEMA IF NOT EXISTS support');
+database/migrations/2026_08_02_260000_create_media_management_platform.php:12:        DB::statement('CREATE SCHEMA IF NOT EXISTS media');
+database/migrations/2026_08_02_000001_extend_geographic_location_tables.php:42:        DB::statement(
+database/migrations/2026_08_02_000001_extend_geographic_location_tables.php:49:        DB::statement(
+database/migrations/2026_08_02_000001_extend_geographic_location_tables.php:77:        DB::statement(
+database/migrations/2026_08_02_000001_extend_geographic_location_tables.php:96:        DB::statement(
+database/migrations/2026_08_03_030000_create_payments_platform.php:13:        DB::statement('CREATE SCHEMA IF NOT EXISTS payments');
+database/migrations/2026_08_03_070000_create_workflow_automation_platform.php:13:        DB::statement('CREATE SCHEMA IF NOT EXISTS automation');
+database/migrations/2026_08_02_270000_create_developer_integration_platform.php:12:        DB::statement('CREATE SCHEMA IF NOT EXISTS developer');
+database/migrations/2026_08_03_050000_create_cms_content_platform.php:12:        DB::statement('CREATE SCHEMA IF NOT EXISTS cms');
+database/migrations/2026_08_03_010000_create_security_compliance_platform.php:12:        DB::statement('CREATE SCHEMA IF NOT EXISTS security');
+database/migrations/2026_08_03_010000_create_security_compliance_platform.php:13:        DB::statement('CREATE SCHEMA IF NOT EXISTS compliance');
+database/migrations/2026_08_02_160000_extend_verification_workflow.php:22:        DB::statement(
+database/migrations/2026_08_02_160000_extend_verification_workflow.php:38:        DB::statement(
+database/migrations/2026_08_02_160000_extend_verification_workflow.php:58:        DB::statement(
+database/migrations/2026_08_02_160000_extend_verification_workflow.php:65:        DB::statement(
+database/migrations/2026_08_02_160000_extend_verification_workflow.php:152:        DB::statement(
+database/migrations/2026_08_02_160000_extend_verification_workflow.php:157:        DB::statement(
+database/migrations/2026_08_02_160000_extend_verification_workflow.php:176:        DB::statement(
+database/migrations/2026_08_02_160000_extend_verification_workflow.php:192:        DB::statement(
+database/migrations/2026_08_03_020000_create_marketplace_commerce_platform.php:12:        DB::statement('CREATE SCHEMA IF NOT EXISTS commerce');
+database/migrations/PASTE_THE_NEW_FILENAME_HERE:77:        DB::statement(

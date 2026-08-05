@@ -1,0 +1,32 @@
+
+  Migration name .............................................. Batch / Status  
+  0001_01_01_000000_create_users_table .............................. [12] Ran  
+  0001_01_01_000001_create_cache_table .............................. [12] Ran  
+  0001_01_01_000002_create_jobs_table ............................... [12] Ran  
+  2026_08_01_112424_create_personal_access_tokens_table .............. [1] Ran  
+  2026_08_01_162927_extend_geographic_location_tables ............... [12] Ran  
+  2026_08_01_163137_extend_geographic_location_tables ............... [12] Ran  
+  2026_08_01_164059_allow_districts_without_city .................... [12] Ran  
+  2026_08_02_000001_extend_geographic_location_tables ................ [2] Ran  
+  2026_08_02_095804_allow_districts_without_city .................... [12] Ran  
+  2026_08_02_150000_extend_directory_core_tables ..................... [3] Ran  
+  2026_08_02_160000_extend_verification_workflow ..................... [4] Ran  
+  2026_08_02_170000_extend_admin_portal_core ......................... [5] Ran  
+  2026_08_02_180000_extend_business_owner_capabilities ............... [6] Ran  
+  2026_08_02_190000_create_search_analytics .......................... Pending  
+  2026_08_02_200000_extend_reviews_reputation ........................ [7] Ran  
+  2026_08_02_210000_extend_leads_marketplace ......................... [8] Ran  
+  2026_08_02_220000_create_advertising_monetization .................. [9] Ran  
+  2026_08_02_230000_create_subscription_billing_platform ............. Pending  
+  2026_08_02_240000_create_ai_business_intelligence ................. [10] Ran  
+  2026_08_02_250000_create_notifications_communication_platform ..... [11] Ran  
+  2026_08_02_260000_create_media_management_platform ................ [13] Ran  
+  2026_08_02_270000_create_developer_integration_platform ........... [14] Ran  
+  2026_08_03_010000_create_security_compliance_platform ............. [15] Ran  
+  2026_08_03_020000_create_marketplace_commerce_platform ............ [19] Ran  
+  2026_08_03_030000_create_payments_platform ........................ [20] Ran  
+  2026_08_03_040000_create_analytics_reporting_platform ............. [16] Ran  
+  2026_08_03_050000_create_cms_content_platform ...................... Pending  
+  2026_08_03_060000_create_customer_support_platform ................ [17] Ran  
+  2026_08_03_070000_create_workflow_automation_platform ............. [18] Ran  
+
