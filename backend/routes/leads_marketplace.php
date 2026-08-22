@@ -11,15 +11,34 @@ Route::prefix('v1')->group(function (): void {
     );
 
     Route::middleware('auth:sanctum')->group(function (): void {
-        Route::get(
-            '/owner/leads',
-            [LeadMarketplaceController::class, 'inbox']
-        );
-
-        Route::get(
-            '/owner/leads/analytics',
-            [LeadMarketplaceController::class, 'analytics']
-        );
+Route::get(
+'/owner/leads',
+[LeadMarketplaceController::class, 'inbox']
+);
+Route::post(
+    '/customer/quote-requests/{quoteRequestId}/responses/{responseId}/accept',
+    [LeadMarketplaceController::class, 'acceptQuote']
+);
+Route::post(
+'/customer/quote-requests/{quoteRequestId}/cancel',
+[LeadMarketplaceController::class, 'cancelQuoteRequest']
+);
+Route::post(
+'/customer/quote-requests/{quoteRequestId}/responses/{responseId}/decline',
+[LeadMarketplaceController::class, 'declineQuote']
+);
+Route::get(
+'/customer/quote-requests',
+[LeadMarketplaceController::class, 'customerRequests']
+);
+Route::get(
+'/quote-requests/{quoteRequestId}/businesses/{businessId}/history',
+[LeadMarketplaceController::class, 'history']
+);
+Route::get(
+'/owner/leads/analytics',
+[LeadMarketplaceController::class, 'analytics']
+);
 
         Route::post(
             '/quote-requests/{quoteRequestId}/businesses/{businessId}/responses',
