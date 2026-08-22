@@ -681,23 +681,19 @@ DB::transaction(function () use (
         'new' => [
             'viewed',
             'contacted',
-            'won',
             'lost',
             'closed',
         ],
         'viewed' => [
             'contacted',
-            'won',
             'lost',
             'closed',
         ],
         'contacted' => [
-            'won',
             'lost',
             'closed',
         ],
         'quoted' => [
-            'won',
             'lost',
             'closed',
         ],
@@ -709,6 +705,11 @@ DB::transaction(function () use (
     $currentStatus = $assignment->status;
     $nextStatus = $data['status'];
 
+    if ($nextStatus === 'won') {
+    throw new RuntimeException(
+        'A lead can only be marked as won when the customer accepts the quote.'
+    );
+}
     if ($currentStatus === $nextStatus) {
         throw new RuntimeException(
             'This lead is already marked as ' .
