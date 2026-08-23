@@ -1207,4 +1207,120 @@ public function test_customer_cannot_cancel_another_customers_quote_request(): v
         $ownerCustomer->delete();
     }
 }
+public function test_customer_cannot_cancel_already_closed_quote_request(): void
+{
+    $customer = User::query()->create([
+        'public_id' => 'test-'.Str::ulid(),
+        'status' => 'active',
+        'password_hash' => Hash::make('Password123!'),
+    ]);
+
+    $owner = User::query()->create([
+        'public_id' => 'test-'.Str::ulid(),
+        'status' => 'active',
+        'password_hash' => Hash::make('Password123!'),
+    ]);
+
+    $business = Business::query()->create([
+        'public_id' => (string) Str::ulid(),
+        'legal_name' => 'Closed Cancel Test Limited',
+        'trading_name' => 'Closed Cancel Test',
+        'slug' => 'closed-cancel-test-'.Str::lower(Str::random(6)),
+        'status' => 'published',
+        'profile_completeness' => 100,
+        'created_by' => $owner->id,
+    ]);
+
+    DB::table('directory.business_members')->insert([
+        'id' => (string) Str::uuid(),
+        'business_id' => $business->id,
+        'user_id' => $owner->id,
+        'role_code' => 'owner',
+        'status' => 'active',
+        'joined_at' => now(),
+        'created_at' => now(),
+    ]);
+
+    $quoteRequestId = (string) Str::uuid();
+    $assignmentId = (string) Str::uuid();
+
+    DB::table('leads.quote_requests')->insert([
+        'id' => $quoteRequestId,
+        'reference_no' => 'TEST-'.Str::upper(Str::random(8)),
+        'title' => 'Closed cancellation test',
+        'description' => 'Test request',
+        'status' => 'closed',
+        'customer_user_id' => $customer->id,
+        'contact_name' => 'Test Customer',
+        'contact_email' => 'customer@example.com',
+        'preferred_contact' => 'email',
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    DB::table('leads.quote_request_businesses')->insert([
+        'id' => $assignmentId,
+        'quote_request_id' => $quoteRequestId,
+        'business_id' => $business->id,
+        'status' => 'closed',
+        'closed_at' => now(),
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    try {
+        try {
+            app(\App\Services\LeadMarketplaceService::class)
+                ->cancelQuoteRequest(
+                    $customer,
+                    $quoteRequestId
+                );
+
+            $this->fail(
+                'Expected RuntimeException was not thrown.'
+            );
+        } catch (\RuntimeException $e) {
+            $this->assertSame(
+                'This quote request is already closed.',
+                $e->getMessage()
+            );
+        }
+
+        $this->assertDatabaseHas(
+            'leads.quote_requests',
+            [
+                'id' => $quoteRequestId,
+                'status' => 'closed',
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            'leads.quote_request_businesses',
+            [
+                'id' => $assignmentId,
+                'status' => 'closed',
+            ]
+        );
+    } finally {
+        DB::table('leads.lead_activity')
+            ->where('quote_request_id', $quoteRequestId)
+            ->delete();
+
+        DB::table('leads.quote_request_businesses')
+            ->where('quote_request_id', $quoteRequestId)
+            ->delete();
+
+        DB::table('leads.quote_requests')
+            ->where('id', $quoteRequestId)
+            ->delete();
+
+        DB::table('directory.business_members')
+            ->where('business_id', $business->id)
+            ->delete();
+
+        $business->forceDelete();
+        $owner->delete();
+        $customer->delete();
+    }
+}
 }
