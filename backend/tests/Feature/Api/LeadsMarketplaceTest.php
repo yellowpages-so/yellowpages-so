@@ -894,4 +894,195 @@ public function test_customer_cannot_decline_another_customers_quote_request(): 
         $ownerCustomer->delete();
     }
 }
+public function test_customer_cancel_closes_open_request_and_non_terminal_assignments(): void
+{
+    $customer = User::query()->create([
+        'public_id' => 'test-'.Str::ulid(),
+        'status' => 'active',
+        'password_hash' => Hash::make('Password123!'),
+    ]);
+
+    $owner = User::query()->create([
+        'public_id' => 'test-'.Str::ulid(),
+        'status' => 'active',
+        'password_hash' => Hash::make('Password123!'),
+    ]);
+
+    $businessOne = Business::query()->create([
+        'public_id' => (string) Str::ulid(),
+        'legal_name' => 'Cancel Test One Limited',
+        'trading_name' => 'Cancel Test One',
+        'slug' => 'cancel-test-one-'.Str::lower(Str::random(6)),
+        'status' => 'published',
+        'profile_completeness' => 100,
+        'created_by' => $owner->id,
+    ]);
+
+    $businessTwo = Business::query()->create([
+        'public_id' => (string) Str::ulid(),
+        'legal_name' => 'Cancel Test Two Limited',
+        'trading_name' => 'Cancel Test Two',
+        'slug' => 'cancel-test-two-'.Str::lower(Str::random(6)),
+        'status' => 'published',
+        'profile_completeness' => 100,
+        'created_by' => $owner->id,
+    ]);
+
+    $businessThree = Business::query()->create([
+        'public_id' => (string) Str::ulid(),
+        'legal_name' => 'Cancel Test Three Limited',
+        'trading_name' => 'Cancel Test Three',
+        'slug' => 'cancel-test-three-'.Str::lower(Str::random(6)),
+        'status' => 'published',
+        'profile_completeness' => 100,
+        'created_by' => $owner->id,
+    ]);
+
+    DB::table('directory.business_members')->insert([
+        [
+            'id' => (string) Str::uuid(),
+            'business_id' => $businessOne->id,
+            'user_id' => $owner->id,
+            'role_code' => 'owner',
+            'status' => 'active',
+            'joined_at' => now(),
+            'created_at' => now(),
+        ],
+        [
+            'id' => (string) Str::uuid(),
+            'business_id' => $businessTwo->id,
+            'user_id' => $owner->id,
+            'role_code' => 'owner',
+            'status' => 'active',
+            'joined_at' => now(),
+            'created_at' => now(),
+        ],
+        [
+            'id' => (string) Str::uuid(),
+            'business_id' => $businessThree->id,
+            'user_id' => $owner->id,
+            'role_code' => 'owner',
+            'status' => 'active',
+            'joined_at' => now(),
+            'created_at' => now(),
+        ],
+    ]);
+
+    $quoteRequestId = (string) Str::uuid();
+    $assignmentOne = (string) Str::uuid();
+    $assignmentTwo = (string) Str::uuid();
+    $assignmentThree = (string) Str::uuid();
+
+    DB::table('leads.quote_requests')->insert([
+        'id' => $quoteRequestId,
+        'reference_no' => 'TEST-'.Str::upper(Str::random(8)),
+        'title' => 'Customer cancel test',
+        'description' => 'Test request',
+        'status' => 'open',
+        'customer_user_id' => $customer->id,
+        'contact_name' => 'Test Customer',
+        'contact_email' => 'customer@example.com',
+        'preferred_contact' => 'email',
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    DB::table('leads.quote_request_businesses')->insert([
+        [
+            'id' => $assignmentOne,
+            'quote_request_id' => $quoteRequestId,
+            'business_id' => $businessOne->id,
+            'status' => 'new',
+            'closed_at' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ],
+        [
+            'id' => $assignmentTwo,
+            'quote_request_id' => $quoteRequestId,
+            'business_id' => $businessTwo->id,
+            'status' => 'quoted',
+            'closed_at' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ],
+        [
+            'id' => $assignmentThree,
+            'quote_request_id' => $quoteRequestId,
+            'business_id' => $businessThree->id,
+            'status' => 'lost',
+            'closed_at' => now(),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ],
+    ]);
+
+    try {
+        app(\App\Services\LeadMarketplaceService::class)
+            ->cancelQuoteRequest(
+                $customer,
+                $quoteRequestId
+            );
+
+        $this->assertDatabaseHas('leads.quote_requests', [
+            'id' => $quoteRequestId,
+            'status' => 'closed',
+        ]);
+
+        $this->assertDatabaseHas(
+            'leads.quote_request_businesses',
+            [
+                'id' => $assignmentOne,
+                'status' => 'closed',
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            'leads.quote_request_businesses',
+            [
+                'id' => $assignmentTwo,
+                'status' => 'closed',
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            'leads.quote_request_businesses',
+            [
+                'id' => $assignmentThree,
+                'status' => 'lost',
+            ]
+        );
+
+        $this->assertDatabaseHas('leads.lead_activity', [
+            'quote_request_id' => $quoteRequestId,
+            'event_type' => 'quote_request_cancelled',
+        ]);
+    } finally {
+        DB::table('leads.lead_activity')
+            ->where('quote_request_id', $quoteRequestId)
+            ->delete();
+
+        DB::table('leads.quote_request_businesses')
+            ->where('quote_request_id', $quoteRequestId)
+            ->delete();
+
+        DB::table('leads.quote_requests')
+            ->where('id', $quoteRequestId)
+            ->delete();
+
+        DB::table('directory.business_members')
+            ->whereIn('business_id', [
+                $businessOne->id,
+                $businessTwo->id,
+                $businessThree->id,
+            ])
+            ->delete();
+
+        $businessOne->forceDelete();
+        $businessTwo->forceDelete();
+        $businessThree->forceDelete();
+        $owner->delete();
+        $customer->delete();
+    }
+}
 }
