@@ -431,4 +431,184 @@ public function test_customer_acceptance_marks_chosen_business_won_and_others_lo
         $customer->delete();
     }
 }
+public function test_customer_decline_marks_only_selected_business_lost_and_keeps_request_open(): void
+{
+$customer = User::query()->create([
+'public_id' => 'test-'.Str::ulid(),
+'status' => 'active',
+'password_hash' => Hash::make('Password123!'),
+]);
+$owner = User::query()->create([
+    'public_id' => 'test-'.Str::ulid(),
+    'status' => 'active',
+    'password_hash' => Hash::make('Password123!'),
+]);
+
+$declinedBusiness = Business::query()->create([
+    'public_id' => (string) Str::ulid(),
+    'legal_name' => 'Declined Quote Test Limited',
+    'trading_name' => 'Declined Quote Test',
+    'slug' => 'declined-quote-test-'.Str::lower(Str::random(6)),
+    'status' => 'published',
+    'profile_completeness' => 100,
+    'created_by' => $owner->id,
+]);
+
+$otherBusiness = Business::query()->create([
+    'public_id' => (string) Str::ulid(),
+    'legal_name' => 'Remaining Quote Test Limited',
+    'trading_name' => 'Remaining Quote Test',
+    'slug' => 'remaining-quote-test-'.Str::lower(Str::random(6)),
+    'status' => 'published',
+    'profile_completeness' => 100,
+    'created_by' => $owner->id,
+]);
+
+DB::table('directory.business_members')->insert([
+    [
+        'id' => (string) Str::uuid(),
+        'business_id' => $declinedBusiness->id,
+        'user_id' => $owner->id,
+        'role_code' => 'owner',
+        'status' => 'active',
+        'joined_at' => now(),
+        'created_at' => now(),
+    ],
+    [
+        'id' => (string) Str::uuid(),
+        'business_id' => $otherBusiness->id,
+        'user_id' => $owner->id,
+        'role_code' => 'owner',
+        'status' => 'active',
+        'joined_at' => now(),
+        'created_at' => now(),
+    ],
+]);
+
+$quoteRequestId = (string) Str::uuid();
+$declinedAssignmentId = (string) Str::uuid();
+$otherAssignmentId = (string) Str::uuid();
+$responseId = (string) Str::uuid();
+
+DB::table('leads.quote_requests')->insert([
+    'id' => $quoteRequestId,
+    'reference_no' => 'TEST-'.Str::upper(Str::random(8)),
+    'title' => 'Customer decline test',
+    'description' => 'Test request',
+    'status' => 'open',
+    'customer_user_id' => $customer->id,
+    'contact_name' => 'Test Customer',
+    'contact_email' => 'customer@example.com',
+    'preferred_contact' => 'email',
+    'created_at' => now(),
+    'updated_at' => now(),
+]);
+
+DB::table('leads.quote_request_businesses')->insert([
+    [
+        'id' => $declinedAssignmentId,
+        'quote_request_id' => $quoteRequestId,
+        'business_id' => $declinedBusiness->id,
+        'status' => 'quoted',
+        'created_at' => now(),
+        'updated_at' => now(),
+    ],
+    [
+        'id' => $otherAssignmentId,
+        'quote_request_id' => $quoteRequestId,
+        'business_id' => $otherBusiness->id,
+        'status' => 'new',
+        'created_at' => now(),
+        'updated_at' => now(),
+    ],
+]);
+
+DB::table('leads.quote_responses')->insert([
+    'id' => $responseId,
+    'quote_request_id' => $quoteRequestId,
+    'business_id' => $declinedBusiness->id,
+    'user_id' => $owner->id,
+    'message' => 'Declined test quote',
+    'currency' => 'USD',
+    'amount' => 100,
+    'estimated_days' => 2,
+    'status' => 'submitted',
+    'created_at' => now(),
+    'updated_at' => now(),
+]);
+
+try {
+    app(\App\Services\LeadMarketplaceService::class)
+        ->declineQuote(
+            $customer,
+            $quoteRequestId,
+            $responseId
+        );
+
+    $this->assertDatabaseHas(
+        'leads.quote_request_businesses',
+        [
+            'id' => $declinedAssignmentId,
+            'status' => 'lost',
+        ]
+    );
+
+    $this->assertDatabaseHas(
+        'leads.quote_request_businesses',
+        [
+            'id' => $otherAssignmentId,
+            'status' => 'new',
+        ]
+    );
+
+    $this->assertDatabaseHas(
+        'leads.quote_requests',
+        [
+            'id' => $quoteRequestId,
+            'status' => 'open',
+        ]
+    );
+
+    $this->assertDatabaseHas(
+        'leads.lead_activity',
+        [
+            'quote_request_id' => $quoteRequestId,
+            'business_id' => $declinedBusiness->id,
+            'event_type' => 'quote_declined',
+        ]
+    );
+} finally {
+    DB::table('leads.lead_activity')
+        ->where('quote_request_id', $quoteRequestId)
+        ->delete();
+
+    DB::table('leads.quote_responses')
+        ->where('quote_request_id', $quoteRequestId)
+        ->delete();
+
+    DB::table('leads.quote_request_businesses')
+        ->where('quote_request_id', $quoteRequestId)
+        ->delete();
+
+    DB::table('leads.quote_requests')
+        ->where('id', $quoteRequestId)
+        ->delete();
+
+    DB::table('directory.business_members')
+        ->whereIn(
+            'business_id',
+            [
+                $declinedBusiness->id,
+                $otherBusiness->id,
+            ]
+        )
+        ->delete();
+
+    $declinedBusiness->forceDelete();
+    $otherBusiness->forceDelete();
+    $owner->delete();
+    $customer->delete();
+}
+}
+
 }
