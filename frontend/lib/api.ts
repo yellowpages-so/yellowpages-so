@@ -1,7 +1,8 @@
 import type {
-  Business,
-  Category,
-  SearchResponse,
+Business,
+Category,
+Review,
+SearchResponse,
 } from "@/lib/types";
 
 const API_URL =
@@ -100,9 +101,21 @@ export async function getBusiness(
 
   return result?.data ?? null;
 }
+export async function getBusinessReviews(
+businessId: string,
+): Promise<Review[]> {
+const result = await apiFetch<{
+success: boolean;
+data: {
+data: Review[];
+};
+}>(
+`/v1/businesses/${encodeURIComponent(businessId)}/reviews`,
+ );
+return result?.data?.data ?? [];
+}
 
 export async function getFeaturedBusinesses(): Promise<Business[]> {
-  const result = await searchBusinesses({ per_page: "6" });
-
-  return result.data ?? [];
+const result = await searchBusinesses({ per_page: "6" });
+return result.data ?? [];
 }
