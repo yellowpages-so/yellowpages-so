@@ -141,8 +141,8 @@ class ReviewReputationService
     public function moderate(string $reviewId, User $actor, array $data): void
     {
         $status = match ($data['action']) {
-            'publish', 'restore' => 'published',
-            'hide' => 'hidden',
+        'publish', 'restore' => 'approved',      
+         'hide' => 'hidden',
             'reject' => 'rejected',
         };
 
@@ -181,8 +181,8 @@ class ReviewReputationService
             ->where('business_id', $businessId);
 
         if (Schema::hasColumn('reviews.reviews', 'status')) {
-            $query->where('status', 'published');
-        }
+           $query->where('status', 'approved');     
+     }
 
         $reviewCount = (clone $query)->count();
         $average = (float) ((clone $query)->avg('rating') ?? 0);

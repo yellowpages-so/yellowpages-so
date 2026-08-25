@@ -28,7 +28,7 @@ class ReviewController extends Controller
             ->where('reviews.business_id', $business->id);
 
         if (Schema::hasColumn('reviews.reviews', 'status')) {
-            $query->where('reviews.status', 'published');
+           $query->where('reviews.status', 'approved');
         }
 
         return response()->json([

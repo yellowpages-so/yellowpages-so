@@ -102,19 +102,37 @@ export async function getBusiness(
   return result?.data ?? null;
 }
 export async function getBusinessReviews(
-businessId: string,
+  businessId: string,
 ): Promise<Review[]> {
-const result = await apiFetch<{
-success: boolean;
-data: {
-data: Review[];
-};
-}>(
-`/v1/businesses/${encodeURIComponent(businessId)}/reviews`,
- );
-return result?.data?.data ?? [];
-}
+  try {
+    const response = await fetch(
+      `${API_URL}/v1/businesses/${encodeURIComponent(
+        businessId,
+      )}/reviews`,
+      {
+        headers: {
+          Accept: "application/json",
+        },
+        cache: "no-store",
+      },
+    );
 
+    if (!response.ok) {
+      return [];
+    }
+
+    const result = (await response.json()) as {
+      success: boolean;
+      data: {
+        data: Review[];
+      };
+    };
+
+    return result.data?.data ?? [];
+  } catch {
+    return [];
+  }
+}
 export async function getFeaturedBusinesses(): Promise<Business[]> {
 const result = await searchBusinesses({ per_page: "6" });
 return result.data ?? [];
