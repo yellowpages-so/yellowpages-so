@@ -14,8 +14,8 @@ class StoreQuoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['nullable', 'uuid', 'exists:directory.categories,id'],
-            'city_id' => ['nullable', 'uuid', 'exists:directory.cities,id'],
+            'category_id' => ['nullable', 'uuid', 'exists:pgsql.directory.categories,id'],
+            'city_id' => ['nullable', 'uuid', 'exists:pgsql.directory.cities,id'],
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'min:20', 'max:5000'],
             'budget_currency' => ['nullable', 'string', 'size:3'],
@@ -27,7 +27,7 @@ class StoreQuoteRequest extends FormRequest
             'contact_phone' => ['nullable', 'string', 'max:50'],
             'preferred_contact' => ['required', 'in:email,phone,whatsapp'],
             'business_ids' => ['nullable', 'array', 'max:10'],
-            'business_ids.*' => ['uuid', 'exists:directory.businesses,id'],
+            'business_ids.*' => ['uuid', 'exists:pgsql.directory.businesses,id'],
         ];
     }
 }
