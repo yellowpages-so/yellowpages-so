@@ -2,62 +2,48 @@
 
 namespace App\Services;
 
+use App\Domain\Directory\Contracts\BusinessRepository;
 use App\Domain\Directory\DTO\CreateBusinessData;
 use App\Models\Business;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class BusinessService
 {
+    public function __construct(
+        private readonly BusinessRepository $businesses,
+    ) {}
+
     public function create(
         User $owner,
         CreateBusinessData $data
     ): Business {
-        return DB::transaction(
-            function () use ($owner, $data): Business {
-                $attributes = $data->toArray();
-
-                $business = Business::query()->create([
-                    ...$attributes,
-                    'public_id' => (string) Str::ulid(),
-                    'slug' => $this->uniqueSlug(
-                        $data->tradingName
-                    ),
-                    'status' => 'draft',
-                    'profile_completeness' => $this->calculateCompleteness(
-                        $attributes
-                    ),
-                    'created_by' => $owner->id,
-                ]);
-
-                DB::table(
-                    'directory.business_members'
-                )->insert([
-                    'id' => (string) Str::uuid(),
-                    'business_id' => $business->id,
-                    'user_id' => $owner->id,
-                    'role_code' => 'owner',
-                    'status' => 'active',
-                    'joined_at' => now(),
-                    'created_at' => now(),
-                ]);
-
-                return $business->fresh();
-            }
+        return $this->businesses->create(
+            $owner,
+            $data
         );
     }
 
-    public function update(Business $business, array $data): Business
-    {
-        if (array_key_exists('trading_name', $data) && $data['trading_name'] !== $business->trading_name) {
-            $data['slug'] = $this->uniqueSlug($data['trading_name'], $business->id);
+    public function update(
+        Business $business,
+        array $data
+    ): Business {
+        if (
+            array_key_exists('trading_name', $data)
+            && $data['trading_name'] !== $business->trading_name
+        ) {
+            $data['slug'] = $this->uniqueSlug(
+                $data['trading_name'],
+                $business->id
+            );
         }
 
         $business->update($data);
 
         $business->update([
-            'profile_completeness' => $this->calculateCompleteness($business->fresh()->toArray()),
+            'profile_completeness' => $this->calculateCompleteness(
+                $business->fresh()->toArray()
+            ),
         ]);
 
         return $business->fresh();

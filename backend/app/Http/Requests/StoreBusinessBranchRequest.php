@@ -15,8 +15,7 @@ class StoreBusinessBranchRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'branch_code' => ['nullable', 'string', 'max:100'],
-            'address_id' => ['nullable', 'uuid', 'exists:directory.addresses,id'],
+            'address_id' => ['nullable', 'uuid', 'exists:pgsql.directory.addresses,id'],
             'phone' => ['nullable', 'string', 'max:50'],
             'email' => ['nullable', 'email', 'max:255'],
             'is_head_office' => ['boolean'],

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreBusinessAddressRequest;
 use App\Http\Requests\StoreBusinessBranchRequest;
 use App\Http\Requests\StoreBusinessContactRequest;
 use App\Http\Requests\StoreBusinessHoursRequest;
@@ -41,6 +42,264 @@ class BusinessOwnerPortalController extends Controller
         return response()->json([
             'success' => true,
             'data' => $this->service->recalculateProgress($business),
+        ]);
+    }
+
+    public function storeAddress(
+        StoreBusinessAddressRequest $request,
+        Business $business
+    ): JsonResponse {
+        $this->service->assertManager($request->user(), $business);
+
+        $data = $request->validated();
+
+        $countryId = DB::table('directory.countries')
+            ->where('iso2', 'SO')
+            ->value('id');
+
+        if (! $countryId) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Somalia country record was not found.',
+            ], 422);
+        }
+
+        $city = DB::table('directory.cities')
+            ->where('id', $data['city_id'])
+            ->where('administrative_area_id', $data['administrative_area_id'])
+            ->exists();
+
+        if (! $city) {
+            return response()->json([
+                'success' => false,
+                'message' => 'The selected city does not belong to the selected region.',
+            ], 422);
+        }
+
+        if (! empty($data['district_id'])) {
+            $district = DB::table('directory.districts')
+                ->where('id', $data['district_id'])
+                ->where('administrative_area_id', $data['administrative_area_id'])
+                ->where('city_id', $data['city_id'])
+                ->exists();
+
+            if (! $district) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'The selected district does not belong to the selected city.',
+                ], 422);
+            }
+        }
+
+        $id = (string) Str::uuid();
+
+        DB::table('directory.addresses')->insert([
+            'id' => $id,
+            'country_id' => $countryId,
+            'administrative_area_id' => $data['administrative_area_id'],
+            'city_id' => $data['city_id'],
+            'district_id' => $data['district_id'] ?? null,
+            'neighbourhood_id' => null,
+            'address_line1' => $data['address_line1'],
+            'address_line2' => $data['address_line2'] ?? null,
+            'landmark' => $data['landmark'] ?? null,
+            'postal_code' => $data['postal_code'] ?? null,
+            'location' => null,
+            'created_at' => now(),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Address created successfully.',
+            'data' => [
+                'id' => $id,
+            ],
+        ], 201);
+    }
+
+    public function categories(
+        Request $request,
+        Business $business
+    ): JsonResponse {
+        $this->service->assertManager($request->user(), $business);
+
+        $rows = DB::table('directory.business_categories as bc')
+            ->join('directory.categories as c', 'c.id', '=', 'bc.category_id')
+            ->where('bc.business_id', $business->id)
+            ->orderByDesc('bc.is_primary')
+            ->orderBy('c.name')
+            ->get([
+                'c.id',
+                'c.name',
+                'c.name_so',
+                'c.slug',
+                'bc.is_primary',
+            ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $rows,
+        ]);
+    }
+
+    public function updateCategories(
+        Request $request,
+        Business $business
+    ): JsonResponse {
+        $this->service->assertManager($request->user(), $business);
+
+        $validated = $request->validate([
+            'primary_category_id' => ['required', 'uuid'],
+            'secondary_category_ids' => ['nullable', 'array', 'max:10'],
+            'secondary_category_ids.*' => ['uuid', 'distinct'],
+        ]);
+
+        $ids = collect([
+            $validated['primary_category_id'],
+            ...($validated['secondary_category_ids'] ?? []),
+        ])->unique()->values();
+
+        $existing = DB::table('directory.categories')
+            ->whereIn('id', $ids)
+            ->pluck('id');
+
+        if ($existing->count() !== $ids->count()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'One or more selected categories are invalid.',
+            ], 422);
+        }
+
+        DB::transaction(function () use (
+            $business,
+            $validated,
+            $ids
+        ): void {
+            DB::table('directory.business_categories')
+                ->where('business_id', $business->id)
+                ->delete();
+
+            foreach ($ids as $categoryId) {
+                $row = [
+                    'business_id' => $business->id,
+                    'category_id' => $categoryId,
+                    'is_primary' => $categoryId === $validated['primary_category_id'],
+                ];
+
+                if (
+                    Schema::hasColumn(
+                        'directory.business_categories',
+                        'id'
+                    )
+                ) {
+                    $row['id'] = (string) Str::uuid();
+                }
+
+                if (
+                    Schema::hasColumn(
+                        'directory.business_categories',
+                        'created_at'
+                    )
+                ) {
+                    $row['created_at'] = now();
+                }
+
+                if (
+                    Schema::hasColumn(
+                        'directory.business_categories',
+                        'updated_at'
+                    )
+                ) {
+                    $row['updated_at'] = now();
+                }
+
+                DB::table('directory.business_categories')
+                    ->insert($row);
+            }
+        });
+
+        $this->service->recalculateProgress($business);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Business categories updated successfully.',
+        ]);
+    }
+
+    public function verificationStatus(
+        Request $request,
+        Business $business
+    ): JsonResponse {
+        $this->service->assertManager($request->user(), $business);
+
+        $latest = \App\Models\VerificationRequest::query()
+            ->where('business_id', $business->id)
+            ->orderByDesc('submitted_at')
+            ->first();
+
+        $requestData = null;
+
+        if ($latest) {
+            $level = DB::table('verification.verification_levels')
+                ->where('id', $latest->requested_level_id)
+                ->first([
+                    'id',
+                    'code',
+                    'name',
+                    'rank',
+                    'description',
+                ]);
+
+            $documents = DB::table('verification.verification_documents')
+                ->where('request_id', $latest->id)
+                ->orderByDesc('created_at')
+                ->get([
+                    'id',
+                    'document_type',
+                    'document_number',
+                    'issued_at',
+                    'expires_at',
+                    'status',
+                    'original_name',
+                    'mime_type',
+                    'file_size',
+                    'virus_scan_passed',
+                    'reviewed_at',
+                    'review_notes',
+                    'created_at',
+                ]);
+
+            $requestData = array_merge(
+                $latest->toArray(),
+                [
+                    'requested_level' => $level,
+                    'documents' => $documents,
+                ]
+            );
+        }
+
+        $currentLevel = null;
+
+        if (filled($business->verification_level_id)) {
+            $currentLevel = DB::table('verification.verification_levels')
+                ->where('id', $business->verification_level_id)
+                ->first([
+                    'id',
+                    'code',
+                    'name',
+                    'rank',
+                    'description',
+                ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'is_verified' => filled($business->verification_level_id),
+                'verification_level_id' => $business->verification_level_id,
+                'current_level' => $currentLevel,
+                'latest_request' => $requestData,
+            ],
         ]);
     }
 
@@ -227,10 +486,10 @@ class BusinessOwnerPortalController extends Controller
             ) {
                 $record = [
                     'id' => (string) Str::uuid(),
-                    'day_of_week' => $row['day_of_week'],
+                    'weekday' => $row['day_of_week'],
                     'is_closed' => $row['is_closed'] ?? false,
-                    'open_time' => $row['open_time'] ?? null,
-                    'close_time' => $row['close_time'] ?? null,
+                    'opens_at' => $row['open_time'] ?? null,
+                    'closes_at' => $row['close_time'] ?? null,
                 ];
 
                 if (

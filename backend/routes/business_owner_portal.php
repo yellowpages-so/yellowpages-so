@@ -8,7 +8,13 @@ Route::prefix('v1/owner')
     ->group(function (): void {
         Route::get('/dashboard', [BusinessOwnerPortalController::class, 'dashboard']);
 
+        Route::post('/businesses/{business}/addresses', [BusinessOwnerPortalController::class, 'storeAddress']);
+
         Route::get('/businesses/{business}/progress', [BusinessOwnerPortalController::class, 'progress']);
+
+        Route::get('/businesses/{business}/categories', [BusinessOwnerPortalController::class, 'categories']);
+        Route::put('/businesses/{business}/categories', [BusinessOwnerPortalController::class, 'updateCategories']);
+        Route::get('/businesses/{business}/verification-status', [BusinessOwnerPortalController::class, 'verificationStatus']);
 
         Route::get('/businesses/{business}/branches', [BusinessOwnerPortalController::class, 'branches']);
         Route::post('/businesses/{business}/branches', [BusinessOwnerPortalController::class, 'storeBranch']);
