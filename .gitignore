@@ -43,3 +43,7 @@ yellowpages_business_module/
 *.branch-fix-backup
 *.before-public-profile
 *.before-*
+
+*.backup
+*~
+*-backup
