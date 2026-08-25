@@ -33,6 +33,31 @@ Route::prefix('v1')
             [AdminVerificationController::class, 'index']
         );
 
+        Route::get(
+            '/admin/verification-requests/{verificationRequest}',
+            [AdminVerificationController::class, 'show']
+        );
+
+        Route::get(
+            '/admin/verification-requests/{verificationRequest}/documents/{documentId}/download',
+            [AdminVerificationController::class, 'downloadDocument']
+        );
+
+        Route::post(
+            '/admin/verification-requests/{verificationRequest}/documents/{documentId}/scan',
+            [AdminVerificationController::class, 'scanDocument']
+        );
+
+        Route::post(
+            '/admin/verification-requests/{verificationRequest}/documents/{documentId}/review',
+            [AdminVerificationController::class, 'reviewDocument']
+        );
+
+        Route::post(
+            '/admin/verification-requests/{verificationRequest}/checks/{checkId}',
+            [AdminVerificationController::class, 'updateCheck']
+        );
+
         Route::post(
             '/admin/verification-requests/{verificationRequest}/decision',
             [AdminVerificationController::class, 'decide']

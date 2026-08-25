@@ -195,6 +195,129 @@ class VerificationService
         ];
     }
 
+    public function approvalGate(
+        VerificationRequest $request,
+        string $approvedLevelCode
+    ): array {
+        $requirements = [
+            'contact_verified' => [
+                'checks' => ['contact'],
+                'documents_required' => false,
+            ],
+            'document_verified' => [
+                'checks' => [
+                    'contact',
+                    'identity',
+                    'business_license',
+                    'tax',
+                ],
+                'documents_required' => true,
+            ],
+            'location_verified' => [
+                'checks' => [
+                    'contact',
+                    'location',
+                ],
+                'documents_required' => true,
+            ],
+            'trusted_business' => [
+                'checks' => [
+                    'contact',
+                    'identity',
+                    'business_license',
+                    'tax',
+                    'location',
+                ],
+                'documents_required' => true,
+            ],
+        ];
+
+        if (! isset($requirements[$approvedLevelCode])) {
+            return [
+                'allowed' => false,
+                'missing_checks' => [],
+                'document_issues' => [
+                    'Unsupported verification level.',
+                ],
+            ];
+        }
+
+        $required = $requirements[$approvedLevelCode];
+
+        $checks = DB::table(
+            'verification.verification_checks'
+        )
+            ->where('request_id', $request->id)
+            ->whereIn(
+                'check_type',
+                $required['checks']
+            )
+            ->get([
+                'check_type',
+                'status',
+            ])
+            ->keyBy('check_type');
+
+        $missingChecks = [];
+
+        foreach ($required['checks'] as $checkType) {
+            if (
+                ! isset($checks[$checkType])
+                || $checks[$checkType]->status !== 'passed'
+            ) {
+                $missingChecks[] = $checkType;
+            }
+        }
+
+        $documentIssues = [];
+
+        if ($required['documents_required']) {
+            $documents = DB::table(
+                'verification.verification_documents'
+            )
+                ->where('request_id', $request->id)
+                ->get([
+                    'id',
+                    'status',
+                    'virus_scan_status',
+                    'original_name',
+                ]);
+
+            if ($documents->isEmpty()) {
+                $documentIssues[] =
+                    'At least one verification document is required.';
+            }
+
+            foreach ($documents as $document) {
+                $name = $document->original_name
+                    ?: $document->id;
+
+                if (
+                    $document->virus_scan_status
+                    !== 'clean'
+                ) {
+                    $documentIssues[] =
+                        $name.
+                        ': security scan has not passed.';
+                }
+
+                if ($document->status !== 'accepted') {
+                    $documentIssues[] =
+                        $name.
+                        ': document review is not accepted.';
+                }
+            }
+        }
+
+        return [
+            'allowed' =>
+                $missingChecks === []
+                && $documentIssues === [],
+            'missing_checks' => $missingChecks,
+            'document_issues' => $documentIssues,
+        ];
+    }
+
     public function decide(
         VerificationRequest $request,
         User $actor,
