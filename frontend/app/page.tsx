@@ -42,18 +42,21 @@ export default async function HomePage() {
             [SearchCheck, "Useful search", "Search by business, service, category, or location."],
             [BadgeCheck, "Trusted profiles", "Clear business details and verification information."],
             [MapPinned, "Local discovery", "Browse businesses by city, district, and neighbourhood."],
-          ].map(([Icon, title, description]) => {
-            const FeatureIcon = Icon as typeof SearchCheck;
-            return (
-              <div className="card p-6" key={String(title)}>
-                <FeatureIcon className="text-[#9a7b00]" />
-                <h2 className="mt-4 text-lg font-black">{String(title)}</h2>
-                <p className="mt-2 text-sm leading-6 text-neutral-600">
-                  {String(description)}
-                </p>
-              </div>
-            );
-          })}
+         ].map(([Icon, title, description]) => {
+  const FeatureIcon = Icon as typeof SearchCheck;
+
+  return (
+    <div className="card p-6" key={String(title)}>
+      <FeatureIcon className="text-[#9a7b00]" />
+      <h2 className="mt-4 text-lg font-black">
+        {String(title)}
+      </h2>
+      <p className="mt-2 text-sm leading-6 text-neutral-600">
+        {String(description)}
+      </p>
+    </div>
+  );
+})}
         </div>
       </section>
 
@@ -94,9 +97,12 @@ export default async function HomePage() {
         </div>
         <div className="mt-7 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {businesses.length > 0 ? (
-            businesses.map((business) => (
-              <BusinessCard key={business.id} business={business} />
-            ))
+           businesses.map((business) => (
+  <BusinessCard
+    key={business.id ?? business.slug}
+    business={business}
+  />
+))
           ) : (
             <div className="card col-span-full p-8 text-center text-neutral-600">
               Business listings will appear here after publication.

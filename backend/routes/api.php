@@ -56,3 +56,5 @@ require __DIR__.'/workflow_automation.php';
 require __DIR__.'/enterprise_standards.php';
 
 require __DIR__.'/enterprise_observability.php';
+
+require __DIR__.'/locations.php';
