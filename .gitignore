@@ -12,19 +12,21 @@ backend/storage/framework/cache/*
 backend/storage/framework/sessions/*
 backend/storage/framework/views/*
 backend/bootstrap/cache/*.php
-
 # Next.js
 frontend/.env*
 frontend/node_modules/
 frontend/.next/
 frontend/out/
-
 # macOS and editors
 .DS_Store
 .idea/
 .vscode/
-
 # Logs and temporary files
 *.log
 *.tmp
 *.swp
+# Production secrets
+backend/.env.production
+production/.env
+production/postgres/postgres.env
+production/observability/.env
