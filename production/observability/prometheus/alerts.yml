@@ -1,0 +1,26 @@
+groups:
+  - name: yellowpages
+    rules:
+      - alert: ApplicationDown
+        expr: yellowpages_application_up == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: YellowPages application is unavailable
+
+      - alert: DatabaseDown
+        expr: yellowpages_database_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: YellowPages database is unavailable
+
+      - alert: HighCpu
+        expr: 100 - avg by(instance)(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100 > 85
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: Host CPU usage is high

@@ -1,0 +1,32 @@
+{
+  "title": "YellowPages.so Overview",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "30s",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Application Up",
+      "targets": [{"expr": "yellowpages_application_up"}],
+      "gridPos": {"h": 6, "w": 6, "x": 0, "y": 0}
+    },
+    {
+      "type": "stat",
+      "title": "Database Up",
+      "targets": [{"expr": "yellowpages_database_up"}],
+      "gridPos": {"h": 6, "w": 6, "x": 6, "y": 0}
+    },
+    {
+      "type": "stat",
+      "title": "Businesses",
+      "targets": [{"expr": "yellowpages_businesses_total"}],
+      "gridPos": {"h": 6, "w": 6, "x": 12, "y": 0}
+    },
+    {
+      "type": "stat",
+      "title": "Users",
+      "targets": [{"expr": "yellowpages_users_total"}],
+      "gridPos": {"h": 6, "w": 6, "x": 18, "y": 0}
+    }
+  ]
+}
