@@ -30,3 +30,16 @@ backend/.env.production
 production/.env
 production/postgres/postgres.env
 production/observability/.env
+# Local backups and temporary development artifacts
+*.bak
+*.save
+**/backups/
+backend-backup-before-business-module/
+backend/database/migration-backups/
+backend/routes.txt
+frontend/tsc
+frontend/yellowpages-so-public@0.1.0
+yellowpages_business_module/
+*.branch-fix-backup
+*.before-public-profile
+*.before-*
